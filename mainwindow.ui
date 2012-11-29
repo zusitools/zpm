@@ -38,6 +38,14 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QTreeView::indicator
+{
+	/* Match check box size to size of the icons used for the check boxes */
+	width: 22px;
+	height: 16px;
+}</string>
+       </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>

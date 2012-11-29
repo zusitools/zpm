@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    packagemodel.cpp
+    packagemodel.cpp \
+    packageitemdelegate.cpp
 
 HEADERS  += mainwindow.h \
-    packagemodel.h
+    packagemodel.h \
+    packageitemdelegate.h
 
 FORMS    += mainwindow.ui
 
