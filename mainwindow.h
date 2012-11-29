@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStandardItem>
+#include <QtXml/QDomElement>
 
 namespace Ui {
 class MainWindow;
@@ -17,7 +18,7 @@ public:
     ~MainWindow();
 
 public slots:
-    void action_load_xml_triggered();
+    void loadRepoData();
     
 private slots:
     void on_treeView_clicked(const QModelIndex &index);
@@ -27,6 +28,7 @@ private:
     QList<QStandardItem *> prepareRow(const QString &first,
                                                     const QString &second,
                                                     const QString &third);
+    void nodeToItem(const QDomNode &node, QStandardItem *parent);
 };
 
 #endif // MAINWINDOW_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>398</width>
-    <height>298</height>
+    <width>724</width>
+    <height>404</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,6 +53,9 @@
        <property name="uniformRowHeights">
         <bool>true</bool>
        </property>
+       <attribute name="headerDefaultSectionSize">
+        <number>200</number>
+       </attribute>
       </widget>
      </widget>
     </item>
@@ -63,7 +66,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>398</width>
+     <width>724</width>
      <height>19</height>
     </rect>
    </property>
@@ -104,7 +107,7 @@
    <sender>action_load_xml</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>action_load_xml_triggered()</slot>
+   <slot>loadRepoData()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -118,6 +121,6 @@
   </connection>
  </connections>
  <slots>
-  <slot>action_load_xml_triggered()</slot>
+  <slot>loadRepoData()</slot>
  </slots>
 </ui>

@@ -1,14 +1,20 @@
 #include <QtGui>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomElement>
+#include <QtXml/QDomNode>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "packagemodel.h"
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->loadRepoData();
 }
 
 MainWindow::~MainWindow()
@@ -24,38 +30,66 @@ QList<QStandardItem *> MainWindow::prepareRow(const QString &first,
     rowItems << new QStandardItem(first);
     rowItems << new QStandardItem(second);
     rowItems << new QStandardItem(third);
-    rowItems.first()->setIcon(QIcon("/opt/kde3/share/icons/Crystal Clear/16x16/filesystems/folder_blue.png"));
     return rowItems;
 }
 
+void MainWindow::nodeToItem(const QDomNode &node, QStandardItem *parent) {
+    if (node.nodeName() == "package")
+    {
+        QList<QStandardItem *> preparedRow = prepareRow(node.attributes().namedItem("name").nodeValue(), "bla", "bla");
+        preparedRow.first()->setCheckable(true);
+        parent->appendRow(preparedRow);
+    }
+    else if (node.nodeName() == "folder")
+    {
+        QList<QStandardItem *> preparedRow = prepareRow(node.attributes().namedItem("name").nodeValue(), QString::null, QString::null);
+        preparedRow.first()->setIcon(QIcon("/opt/kde3/share/icons/Crystal Clear/16x16/filesystems/folder_blue.png"));
+        parent->appendRow(preparedRow);
 
-void MainWindow::action_load_xml_triggered()
+        QDomNode n = node.firstChild();
+        while(!n.isNull()) {
+            QDomElement e = n.toElement();
+            if(!e.isNull()) {
+                nodeToItem(n, preparedRow.first());
+            }
+            n = n.nextSibling();
+        }
+    }
+    else if (node.nodeName() == "root" || node.nodeName() == "folder")
+    {
+        QDomNode n = node.firstChild();
+        while(!n.isNull()) {
+            QDomElement e = n.toElement();
+            if(!e.isNull()) {
+                nodeToItem(n, parent);
+            }
+            n = n.nextSibling();
+        }
+    }
+}
+
+void MainWindow::loadRepoData()
 {
+    // Read XML file
+    // TODO: Read more than one XML file
     QFile* xmlFile = new QFile("/home/jojo/dokumente/projekte/zusi/zpm/repo.xml");
     if (!xmlFile->open(QIODevice::ReadOnly)) {
         QMessageBox::information(this, tr("Unable to open file"), xmlFile->errorString());
         return;
     }
 
-    QXmlStreamReader reader(xmlFile);
+    // Parse XML file
+    QDomDocument xmlDoc;
+    if (!xmlDoc.setContent(xmlFile)) {
+        // TODO error handling
+        xmlFile->close();
+        return;
+    }
 
-    // XML-Datei lesen und in Nodes umwandeln
+    xmlFile->close();
 
-    QStandardItemModel *model = new QStandardItemModel();
-
-    QList<QStandardItem *> preparedRow = prepareRow("first", "second", "third");
-    QStandardItem *item = model->invisibleRootItem();
-    // adding a row to the invisible root item produces a root element
-    item->appendRow(preparedRow);
-
-    QList<QStandardItem *> secondRow = prepareRow("111", "222", "333");
-    // adding a row to an item starts a subtree
-    preparedRow.first()->appendRow(secondRow);
-
-    model->setHeaderData(0, Qt::Horizontal, tr("Name"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Installierte Version"));
-    model->setHeaderData(2, Qt::Horizontal, tr("Verfügbare Version"));
-    model->setHeaderData(3, Qt::Horizontal, tr("Autor"));
+    PackageModel *model = new PackageModel(this);
+    nodeToItem(xmlDoc.documentElement(), model->invisibleRootItem());
 
     ui->treeView->setModel(model);
     ui->treeView->expandAll();
