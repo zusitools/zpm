@@ -20,3 +20,5 @@ HEADERS  += mainwindow.h \
     packagemodel.h
 
 FORMS    += mainwindow.ui
+
+TRANSLATIONS = zpm_de.ts
