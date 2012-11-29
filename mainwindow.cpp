@@ -16,6 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->treeView->header()->setResizeMode(0, QHeaderView::Stretch);
+    ui->treeView->header()->setResizeMode(1, QHeaderView::Custom);
+    ui->treeView->header()->setResizeMode(2, QHeaderView::Custom);
+
     ui->treeView->setItemDelegate(new PackageItemDelegate());
 
     this->loadRepoData();
@@ -96,10 +100,16 @@ void MainWindow::loadRepoData()
     nodeToItem(xmlDoc.documentElement(), model->invisibleRootItem());
 
     ui->treeView->setModel(model);
+    ui->treeView->sortByColumn(0, Qt::AscendingOrder);
     ui->treeView->expandAll();
 }
 
-void MainWindow::on_treeView_clicked(const QModelIndex &index)
+void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
 {
-    // TODO
+    // Retrieve model index of item at the position the context menu was opened
+    QModelIndex itemIndex = ui->treeView->indexAt(pos);
+
+    QMenu *menu = new QMenu;
+    menu->addAction(QString::number(itemIndex.row()), this, SLOT(test_slot()));
+    menu->exec(ui->treeView->mapToGlobal(pos));
 }
