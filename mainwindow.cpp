@@ -76,7 +76,7 @@ void MainWindow::loadRepoData()
 {
     // Read XML file
     // TODO: Read more than one XML file
-    QFile* xmlFile = new QFile("/home/jojo/dokumente/projekte/zusi/zpm/repo.xml");
+    QFile* xmlFile = new QFile("repo.xml");
     if (!xmlFile->open(QIODevice::ReadOnly)) {
         QMessageBox::information(this, tr("Unable to open file"), xmlFile->errorString());
         return;
