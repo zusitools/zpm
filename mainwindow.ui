@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Zusi-Paketmanager</string>
+   <string>Zusi Package Manager</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -80,7 +80,7 @@
    </property>
    <widget class="QMenu" name="menuDatei">
     <property name="title">
-     <string>&amp;Datei</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="action_load_xml"/>
     <addaction name="action_apply_changes"/>
@@ -99,12 +99,12 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_apply_changes">
    <property name="text">
-    <string>Ä&amp;nderungen übernehmen</string>
+    <string>&amp;Apply changes</string>
    </property>
   </action>
   <action name="action_load_xml">
    <property name="text">
-    <string>&amp;XML laden</string>
+    <string>Load &amp;XML</string>
    </property>
   </action>
  </widget>
