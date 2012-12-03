@@ -2,7 +2,7 @@
 #include <QList>
 #include <QStringList>
 
-Package::Package(QString qualifiedName, QString displayName = QString())
+Package::Package(QString qualifiedName, QString displayName, PackageState state)
 {
     this->qualifiedName = qualifiedName;
 
@@ -13,6 +13,7 @@ Package::Package(QString qualifiedName, QString displayName = QString())
     }
 
     this->versions = new QList<PackageVersion *>();
+    this->m_state = state;
 }
 
 Package::~Package()
