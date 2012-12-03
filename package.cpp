@@ -2,16 +2,22 @@
 #include <QList>
 #include <QStringList>
 
-Package::Package(QString qualifiedName)
+Package::Package(QString qualifiedName, QString displayName = QString())
 {
     this->qualifiedName = qualifiedName;
-    this->displayName = qualifiedName.split("/").last();
+
+    if (displayName.isEmpty()) {
+        this->displayName = qualifiedName.split("/").last();
+    } else {
+        this->displayName = displayName;
+    }
+
     this->versions = new QList<PackageVersion *>();
 }
 
 Package::~Package()
 {
-    // qDeleteAll(versions);
+    qDeleteAll(*versions);
 }
 
 QString Package::getQualifiedName()

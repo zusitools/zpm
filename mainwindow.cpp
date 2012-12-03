@@ -62,7 +62,8 @@ void MainWindow::loadRepoData()
         QDomNodeList packageNodes = xmlDoc.documentElement().childNodes();
         for (int i = 0; i < packageNodes.count(); i++) {
             if (packageNodes.at(i).nodeName() == "package") {
-                packages->append(new Package(packageNodes.at(i).attributes().namedItem("name").nodeValue()));
+                packages->append(new Package(packageNodes.at(i).attributes().namedItem("name").nodeValue(),
+                                             packageNodes.at(i).attributes().namedItem("displayname").nodeValue()));
             }
         }
 

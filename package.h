@@ -11,7 +11,7 @@
 class Package
 {
 public:
-    Package(QString qualifiedName);
+    Package(QString qualifiedName, QString displayName);
     ~Package();
 
     QString getQualifiedName();
