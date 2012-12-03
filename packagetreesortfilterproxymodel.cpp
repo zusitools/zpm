@@ -14,8 +14,8 @@ bool PackageTreeSortFilterProxyModel::lessThan(const QModelIndex &left, const QM
     PackageTreeItem *rightItem = (PackageTreeItem*)right.internalPointer();
 
     if (leftItem->getType() == FOLDER) {
-        return (rightItem->getType() != PACKAGE) && (((Folder*)leftItem)->getName() < ((Folder*)rightItem)->getName());
+        return (rightItem->getType() != PACKAGE) && (((Folder*)leftItem)->getName().localeAwareCompare(((Folder*)rightItem)->getName()) < 0);
     } else { // left->getType() == PACKAGE
-        return (rightItem->getType() != FOLDER) || (((Package*)leftItem)->getDisplayName() < ((Package*)rightItem)->getDisplayName());
+        return (rightItem->getType() != FOLDER) && (((Package*)leftItem)->getDisplayName().localeAwareCompare(((Package*)rightItem)->getDisplayName()) < 0);
     }
 }
