@@ -1,12 +1,16 @@
 #include <QtGui>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QSortFilterProxyModel>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 #include <QtXml/QDomNode>
+#include <QXmlQuery>
+#include <QXmlResultItems>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "packagemodel.h"
+#include "packagetreemodel.h"
+#include "packagetreesortfilterproxymodel.h"
 #include "packageitemdelegate.h"
 #include <iostream>
 
@@ -30,78 +34,66 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-QList<QStandardItem *> MainWindow::prepareRow(const QString &first,
-                                                const QString &second,
-                                                const QString &third)
-{
-    QList<QStandardItem *> rowItems;
-    rowItems << new QStandardItem(first);
-    rowItems << new QStandardItem(second);
-    rowItems << new QStandardItem(third);
-    return rowItems;
-}
-
-void MainWindow::nodeToItem(const QDomNode &node, QStandardItem *parent) {
-    if (node.nodeName() == "package")
-    {
-        QList<QStandardItem *> preparedRow = prepareRow(node.attributes().namedItem("name").nodeValue(), "bla", "bla");
-        preparedRow.first()->setCheckable(true);
-        parent->appendRow(preparedRow);
-    }
-    else if (node.nodeName() == "folder")
-    {
-        QList<QStandardItem *> preparedRow = prepareRow(node.attributes().namedItem("name").nodeValue(), QString::null, QString::null);
-        preparedRow.first()->setIcon(QIcon("/opt/kde3/share/icons/Crystal Clear/16x16/filesystems/folder_blue.png"));
-        parent->appendRow(preparedRow);
-
-        QDomNode n = node.firstChild();
-        while(!n.isNull()) {
-            QDomElement e = n.toElement();
-            if(!e.isNull()) {
-                nodeToItem(n, preparedRow.first());
-            }
-            n = n.nextSibling();
-        }
-    }
-    else if (node.nodeName() == "root" || node.nodeName() == "folder")
-    {
-        QDomNode n = node.firstChild();
-        while(!n.isNull()) {
-            QDomElement e = n.toElement();
-            if(!e.isNull()) {
-                nodeToItem(n, parent);
-            }
-            n = n.nextSibling();
-        }
-    }
-}
-
 void MainWindow::loadRepoData()
 {
-    // Read XML file
-    // TODO: Read more than one XML file
-    QFile* xmlFile = new QFile("repo.xml");
-    if (!xmlFile->open(QIODevice::ReadOnly)) {
-        QMessageBox::information(this, tr("Unable to open file"), xmlFile->errorString());
-        return;
-    }
+    QTime myTimer;
+    myTimer.start();
 
-    // Parse XML file
-    QDomDocument xmlDoc;
-    if (!xmlDoc.setContent(xmlFile)) {
-        // TODO error handling
+    // Read XML files
+    QList<QFile*> xmlFiles;
+    xmlFiles << new QFile("repo_gt8.xml");
+    xmlFiles << new QFile("repo_langeland.xml");
+    xmlFiles << new QFile("repo_driburg.xml");
+    xmlFiles << new QFile("repo_altenbeken.xml");
+    xmlFiles << new QFile("repo_timetable.xml");
+
+    // TODO this has to be deleted at some point
+    QList<Package *> *packages = new QList<Package *>();
+
+    QXmlQuery query;
+    query.setQuery("/root/package");
+
+    foreach (QFile* xmlFile, xmlFiles) {
+        if (!xmlFile->open(QIODevice::ReadOnly)) {
+            QMessageBox::warning(this, tr("Unable to open file"), xmlFile->errorString());
+            continue;
+        }
+
+        QDomDocument xmlDoc;
+
+        if (!xmlDoc.setContent(xmlFile)) {
+            // TODO error handling
+            continue;
+        }
+
+        // FIXME hack
+        // TODO duplicate filtering
+        QDomNodeList packageNodes = xmlDoc.documentElement().childNodes();//.at(0).childNodes();
+        for (int i = 0; i < packageNodes.count(); i++) {
+            if (packageNodes.at(i).nodeName() == "package") {
+                packages->append(new Package(packageNodes.at(i).attributes().namedItem("name").nodeValue()));
+            }
+        }
+
         xmlFile->close();
-        return;
     }
 
-    xmlFile->close();
+    PackageTreeModel *treeModel = new PackageTreeModel(packages);
+    PackageTreeSortFilterProxyModel *sortFilterModel = new PackageTreeSortFilterProxyModel();
+    sortFilterModel->setSourceModel(treeModel);
 
-    PackageModel *model = new PackageModel(this);
-    nodeToItem(xmlDoc.documentElement(), model->invisibleRootItem());
-
-    ui->treeView->setModel(model);
+    ui->treeView->setModel(sortFilterModel);
     ui->treeView->sortByColumn(0, Qt::AscendingOrder);
     ui->treeView->expandAll();
+
+    ui->treeView->resizeColumnToContents(0);
+    ui->treeView->resizeColumnToContents(1);
+    ui->treeView->resizeColumnToContents(2);
+    ui->treeView->resizeColumnToContents(3);
+
+    // connect(model, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(treeViewItemChanged(QStandardItem*)));
+
+    qDebug() << "Loading model took " + QString::number(myTimer.elapsed()) + " ms";
 }
 
 void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
@@ -112,4 +104,11 @@ void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
     QMenu *menu = new QMenu;
     menu->addAction(QString::number(itemIndex.row()), this, SLOT(test_slot()));
     menu->exec(ui->treeView->mapToGlobal(pos));
+}
+
+void MainWindow::treeViewItemChanged(QStandardItem *item)
+{
+    // TODO react to change of selection
+    using namespace std;
+    cout << item->text().toStdString();
 }

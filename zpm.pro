@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml
+QT       += core gui xml xmlpatterns
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,12 +14,22 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    packagemodel.cpp \
-    packageitemdelegate.cpp
+    packageitemdelegate.cpp \
+    package.cpp \
+    packageversion.cpp \
+    folder.cpp \
+    packagetreeitem.cpp \
+    packagetreemodel.cpp \
+    packagetreesortfilterproxymodel.cpp
 
 HEADERS  += mainwindow.h \
-    packagemodel.h \
-    packageitemdelegate.h
+    packageitemdelegate.h \
+    package.h \
+    packageversion.h \
+    folder.h \
+    packagetreeitem.h \
+    packagetreemodel.h \
+    packagetreesortfilterproxymodel.h
 
 FORMS    += mainwindow.ui
 

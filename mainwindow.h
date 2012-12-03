@@ -22,6 +22,7 @@ public slots:
     
 private slots:
     void on_treeView_customContextMenuRequested(const QPoint &pos);
+    void treeViewItemChanged(QStandardItem* item);
 
 private:
     Ui::MainWindow *ui;

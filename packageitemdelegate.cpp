@@ -1,5 +1,6 @@
 #include "packageitemdelegate.h"
 #include <QPainter>
+#include <QDebug>
 
 PackageItemDelegate::PackageItemDelegate(QObject *parent) :
     QItemDelegate(parent)

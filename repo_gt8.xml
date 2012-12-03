@@ -1,0 +1,14 @@
+<root>
+	<spec-version>1</spec-version>
+
+	<package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M" displayname="GT8-100D/2S-M" type="fzg" license="zusi">
+		<description>GT8-100D/2S-M der Stadtbahn Karlsruhe</description>
+		
+		<version name="1.0">
+			<!-- URL? Einzelne Packages als ZIP? -->
+			<file path="Altlack/…" sha1="…" /> <!-- relativer Pfad -->
+			<dependency package="…" versions="…" />
+			<dependency file="…" versions="…" /> <!-- package oder file? -->
+		</version>
+	</package>
+</root>
