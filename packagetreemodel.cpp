@@ -61,6 +61,9 @@ QVariant PackageTreeModel::data(const QModelIndex &index, int role) const
         }
         else if (role == Qt::CheckStateRole && item->getType() == PACKAGE && index.column() == 0)
         {
+            // We have to return Qt::Checked or Qt::Unchecked, else check boxes won't be shown.
+            // The value returned is irrelevant since we do the drawing of the check boxes ourselves
+            // based on the package state.
             return Qt::Checked;
         }
         else if (role == Qt::DecorationRole && index.column() == 0)
@@ -134,6 +137,11 @@ Qt::ItemFlags PackageTreeModel::flags(const QModelIndex &index) const
     return result;
 }
 
+void PackageTreeModel::notifyDataChanged(const QModelIndex &index)
+{
+    emit dataChanged(index, index);
+}
+
 QVariant PackageTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
@@ -150,6 +158,17 @@ QVariant PackageTreeModel::headerData(int section, Qt::Orientation orientation, 
     }
 
     return QVariant();
+}
+
+bool PackageTreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (index.isValid() && role == Qt::CheckStateRole && ((PackageTreeItem*)(index.internalPointer()))->getType() == PACKAGE) {
+        emit packageCheckStateChanged(index);
+        emit dataChanged(index, index);
+        return true;
+    }
+
+    return QAbstractItemModel::setData(index, value, role);
 }
 
 Folder *PackageTreeModel::indexToFolder(const QModelIndex &index) const

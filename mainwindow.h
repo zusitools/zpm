@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QStandardItem>
 #include <QtXml/QDomElement>
+#include "package.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,7 +23,7 @@ public slots:
     
 private slots:
     void on_treeView_customContextMenuRequested(const QPoint &pos);
-    void treeViewItemChanged(QStandardItem* item);
+    void packageCheckStateChanged(QModelIndex index);
 
 private:
     Ui::MainWindow *ui;

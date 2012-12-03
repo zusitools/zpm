@@ -33,6 +33,7 @@ public:
     QString getQualifiedName();
     QString getDisplayName();
     PackageState state() { return m_state; }
+    void setState(PackageState state) { m_state = state; }
 
 private:
     QString qualifiedName;

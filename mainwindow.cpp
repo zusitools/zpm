@@ -8,6 +8,8 @@
 #include "packagetreemodel.h"
 #include "packagetreesortfilterproxymodel.h"
 #include "packageitemdelegate.h"
+#include "packageitem.h"
+#include "package.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -74,6 +76,8 @@ void MainWindow::loadRepoData()
     PackageTreeSortFilterProxyModel *sortFilterModel = new PackageTreeSortFilterProxyModel();
     sortFilterModel->setSourceModel(treeModel);
 
+    connect(treeModel, SIGNAL(packageCheckStateChanged(QModelIndex)), this, SLOT(packageCheckStateChanged(QModelIndex)));
+
     ui->treeView->setModel(sortFilterModel);
     ui->treeView->sortByColumn(0, Qt::AscendingOrder);
     ui->treeView->expandAll();
@@ -82,8 +86,6 @@ void MainWindow::loadRepoData()
     ui->treeView->resizeColumnToContents(1);
     ui->treeView->resizeColumnToContents(2);
     ui->treeView->resizeColumnToContents(3);
-
-    // connect(model, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(treeViewItemChanged(QStandardItem*)));
 
     qDeleteAll(xmlFiles);
 
@@ -100,9 +102,20 @@ void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
     menu->exec(ui->treeView->mapToGlobal(pos));
 }
 
-void MainWindow::treeViewItemChanged(QStandardItem *item)
+void MainWindow::packageCheckStateChanged(QModelIndex index)
 {
-    // TODO react to change of selection
-    using namespace std;
-    qDebug() << item->text();
+    Package *package = ((PackageItem*)index.internalPointer())->package();
+
+    // just for demonstration ATM
+    switch (package->state()) {
+        case INSTALL:
+        case KEEPINSTALLED:
+            package->setState(NOTINSTALLED);
+            break;
+        case NOTINSTALLED:
+            package->setState(INSTALL);
+            break;
+        default:
+            break;
+    }
 }

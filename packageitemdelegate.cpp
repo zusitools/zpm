@@ -27,6 +27,9 @@ void PackageItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
             rect.setWidth(22);
             rect.setHeight(16);
 
+
+            QIcon("icons/noinst.xpm").paint(painter, rect);
+
             switch (package->state()) {
                 case AUTODELETE:
                     QIcon("icons/autodel.xpm").paint(painter, rect);
@@ -47,7 +50,6 @@ void PackageItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
                     QIcon("icons/keepinst.xpm").paint(painter, rect);
                     break;
                 case NOTINSTALLED:
-                    QIcon("icons/noinst.xpm").paint(painter, rect);
                     break;
                 case PROTECTED:
                     QIcon("icons/protected.xpm").paint(painter, rect);
