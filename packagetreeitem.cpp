@@ -3,10 +3,10 @@
 
 PackageTreeItem::PackageTreeItem(Folder *parentFolder)
 {
-    this->parentFolder = parentFolder;
+    this->m_parentFolder = parentFolder;
 }
 
-Folder *PackageTreeItem::getParentFolder()
+Folder *PackageTreeItem::parentFolder()
 {
-    return parentFolder;
+    return m_parentFolder;
 }

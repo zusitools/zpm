@@ -101,7 +101,7 @@ QModelIndex PackageTreeModel::parent(const QModelIndex &child) const
         return QModelIndex();
     }
 
-    Folder *parent = item->getParentFolder();
+    Folder *parent = item->parentFolder();
 
     for (int i = 0; i < parent->packageCount(); i++) {
         if (parent->package(i) == item) {

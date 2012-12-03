@@ -12,11 +12,11 @@ class PackageTreeItem
 {
 public:
     explicit PackageTreeItem(Folder *parentFolder);
-    Folder *getParentFolder();
+    Folder *parentFolder();
 
     virtual PackageTreeItemType getType() = 0;
 private:
-    Folder *parentFolder;
+    Folder *m_parentFolder;
 };
 
 #endif // PACKAGETREEITEM_H
