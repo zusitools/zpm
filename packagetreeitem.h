@@ -13,7 +13,6 @@ class PackageTreeItem
 public:
     explicit PackageTreeItem(Folder *parentFolder);
     Folder *getParentFolder();
-    void setParentFolder(Folder *parent);
 
     virtual PackageTreeItemType getType() = 0;
 private:

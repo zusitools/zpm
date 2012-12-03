@@ -4,22 +4,22 @@
 #include <QList>
 #include <QVariant>
 #include "packagetreeitem.h"
-#include "package.h"
+#include "packageitem.h"
 
-// Forward declaration of class Package, Folder and Package reference each other.
-class Package;
+// Forward declaration of class PackageItem, Folder and PackageItem reference each other.
+class PackageItem;
 
 class Folder : public PackageTreeItem
 {
 public:
     Folder(const QString &name = "", Folder *parent = 0);
-    ~Folder();
+    virtual ~Folder();
 
     void appendSubfolder(Folder *child);
-    void appendPackage(Package *package);
+    void appendPackage(PackageItem *package);
 
     Folder *subfolder(int row);
-    Package *package(int index);
+    PackageItem *package(int index);
 
     int subfolderCount() const;
     int packageCount() const;
@@ -32,7 +32,7 @@ public:
 
 private:
     QList<Folder *> subfolders;
-    QList<Package *> packages;
+    QList<PackageItem *> packages;
     QString name;
 };
 

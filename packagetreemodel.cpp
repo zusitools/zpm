@@ -52,7 +52,7 @@ QVariant PackageTreeModel::data(const QModelIndex &index, int role) const
                 return QString(((Folder*)item)->getName());
             } else if (item->getType() == PACKAGE) {
                 switch (index.column()) {
-                    case 0: return ((Package*)item)->getDisplayName();
+                    case 0: return ((PackageItem*)item)->package()->getDisplayName();
                     case 1: return QString("1.0.1");
                     case 2: return QString("1.0.2");
                     case 3: return QString("Max Mustermann");
@@ -177,7 +177,7 @@ void PackageTreeModel::insertPackage(Package *package) {
         }
 
         if (!foundParent) {
-            Folder *newSubfolder = new Folder(splitPath.at(i));
+            Folder *newSubfolder = new Folder(splitPath.at(i), parent);
             parent->appendSubfolder(newSubfolder);
             parent = newSubfolder;
         }
@@ -185,11 +185,11 @@ void PackageTreeModel::insertPackage(Package *package) {
 
     // Check if a package with the same name already exists in the folder
     for (int i = 0; i < parent->packageCount(); i++) {
-        if (parent->package(i)->getQualifiedName().toLower() == package->getQualifiedName().toLower()) {
+        if (parent->package(i)->package()->getQualifiedName().toLower() == package->getQualifiedName().toLower()) {
             // TODO: we would append the versions here
             return;
         }
     }
 
-    parent->appendPackage(package);
+    parent->appendPackage(new PackageItem(package, parent));
 }

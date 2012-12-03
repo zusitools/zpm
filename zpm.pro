@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     folder.cpp \
     packagetreeitem.cpp \
     packagetreemodel.cpp \
-    packagetreesortfilterproxymodel.cpp
+    packagetreesortfilterproxymodel.cpp \
+    packageitem.cpp
 
 HEADERS  += mainwindow.h \
     packageitemdelegate.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     folder.h \
     packagetreeitem.h \
     packagetreemodel.h \
-    packagetreesortfilterproxymodel.h
+    packagetreesortfilterproxymodel.h \
+    packageitem.h
 
 FORMS    += mainwindow.ui
 

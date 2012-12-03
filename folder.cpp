@@ -19,13 +19,11 @@ Folder::~Folder()
 void Folder::appendSubfolder(Folder *child)
 {
     subfolders.append(child);
-    child->setParentFolder(this);
 }
 
-void Folder::appendPackage(Package *package)
+void Folder::appendPackage(PackageItem *package)
 {
     packages.append(package);
-    package->setParentFolder(this);
 }
 
 Folder *Folder::subfolder(int row)
@@ -33,7 +31,7 @@ Folder *Folder::subfolder(int row)
     return subfolders.at(row);
 }
 
-Package *Folder::package(int row)
+PackageItem *Folder::package(int row)
 {
     return packages.at(row);
 }

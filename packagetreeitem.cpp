@@ -10,8 +10,3 @@ Folder *PackageTreeItem::getParentFolder()
 {
     return parentFolder;
 }
-
-void PackageTreeItem::setParentFolder(Folder *parent)
-{
-    this->parentFolder = parent;
-}

@@ -2,7 +2,7 @@
 #include <QList>
 #include <QStringList>
 
-Package::Package(QString qualifiedName, Folder *parent) : PackageTreeItem(parent)
+Package::Package(QString qualifiedName)
 {
     this->qualifiedName = qualifiedName;
     this->displayName = qualifiedName.split("/").last();

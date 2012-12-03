@@ -3,6 +3,7 @@
 
 #include <QAbstractItemModel>
 #include "package.h"
+#include "folder.h"
 
 class PackageTreeModel : public QAbstractItemModel
 {
