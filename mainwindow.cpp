@@ -1,18 +1,13 @@
 #include <QtGui>
-#include <QStandardItemModel>
-#include <QStandardItem>
-#include <QSortFilterProxyModel>
+#include <QDebug>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 #include <QtXml/QDomNode>
-#include <QXmlQuery>
-#include <QXmlResultItems>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "packagetreemodel.h"
 #include "packagetreesortfilterproxymodel.h"
 #include "packageitemdelegate.h"
-#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -50,9 +45,6 @@ void MainWindow::loadRepoData()
     // TODO this has to be deleted at some point
     QList<Package *> *packages = new QList<Package *>();
 
-    QXmlQuery query;
-    query.setQuery("/root/package");
-
     foreach (QFile* xmlFile, xmlFiles) {
         if (!xmlFile->open(QIODevice::ReadOnly)) {
             QMessageBox::warning(this, tr("Unable to open file"), xmlFile->errorString());
@@ -67,8 +59,7 @@ void MainWindow::loadRepoData()
         }
 
         // FIXME hack
-        // TODO duplicate filtering
-        QDomNodeList packageNodes = xmlDoc.documentElement().childNodes();//.at(0).childNodes();
+        QDomNodeList packageNodes = xmlDoc.documentElement().childNodes();
         for (int i = 0; i < packageNodes.count(); i++) {
             if (packageNodes.at(i).nodeName() == "package") {
                 packages->append(new Package(packageNodes.at(i).attributes().namedItem("name").nodeValue()));
@@ -93,6 +84,8 @@ void MainWindow::loadRepoData()
 
     // connect(model, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(treeViewItemChanged(QStandardItem*)));
 
+    qDeleteAll(xmlFiles);
+
     qDebug() << "Loading model took " + QString::number(myTimer.elapsed()) + " ms";
 }
 
@@ -110,5 +103,5 @@ void MainWindow::treeViewItemChanged(QStandardItem *item)
 {
     // TODO react to change of selection
     using namespace std;
-    cout << item->text().toStdString();
+    qDebug() << item->text();
 }
