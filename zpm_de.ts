@@ -25,30 +25,51 @@
         <translation>&amp;XML laden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="85"/>
+        <location filename="mainwindow.cpp" line="52"/>
         <source>Unable to open file</source>
         <translation>Kann Datei nicht öffnen</translation>
     </message>
+    <message>
+        <location filename="mainwindow.cpp" line="101"/>
+        <source>Keep</source>
+        <translation>Behalten</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="102"/>
+        <source>Delete</source>
+        <translation>Löschen</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="103"/>
+        <source>Update</source>
+        <translation>Aktualisieren</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="104"/>
+        <source>Force update</source>
+        <translation>Unbedingt aktualisieren</translation>
+    </message>
 </context>
 <context>
-    <name>PackageModel</name>
+    <name>PackageTreeModel</name>
     <message>
-        <location filename="packagemodel.cpp" line="8"/>
+        <location filename="packagetreemodel.cpp" line="151"/>
         <source>Name</source>
+        <translatorcomment>Name</translatorcomment>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="packagemodel.cpp" line="9"/>
-        <source>Installed version</source>
+        <location filename="packagetreemodel.cpp" line="153"/>
+        <source>Installed Version</source>
         <translation>Installierte Version</translation>
     </message>
     <message>
-        <location filename="packagemodel.cpp" line="10"/>
-        <source>Available version</source>
+        <location filename="packagetreemodel.cpp" line="155"/>
+        <source>Available Version</source>
         <translation>Verfügbare Version</translation>
     </message>
     <message>
-        <location filename="packagemodel.cpp" line="11"/>
+        <location filename="packagetreemodel.cpp" line="157"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
