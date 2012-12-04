@@ -51,6 +51,7 @@
 	/* Match check box size to size of the icons used for the check boxes */
 	width: 22px;
 	height: 16px;
+    image: none;
 }</string>
        </property>
        <property name="editTriggers">
