@@ -26,6 +26,5 @@
         <file>icons/protected.xpm</file>
         <file>icons/update_disabled.xpm</file>
         <file>icons/protected_disabled.xpm</file>
-        <file>icons/folder.png</file>
     </qresource>
 </RCC>

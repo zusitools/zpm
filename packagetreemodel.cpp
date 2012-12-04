@@ -4,6 +4,8 @@
 #include <QStringList>
 #include <QDebug>
 #include <QIcon>
+#include <QApplication>
+#include <QStyle>
 
 PackageTreeModel::PackageTreeModel(QList<Package *> *packages, QObject *parent)
     : QAbstractItemModel(parent)
@@ -69,7 +71,7 @@ QVariant PackageTreeModel::data(const QModelIndex &index, int role) const
         else if (role == Qt::DecorationRole && index.column() == 0)
         {
             if (item->getType() == FOLDER) {
-                return QIcon(":/zpm/icons/folder.png"); // TODO os specific icons
+                return QApplication::style()->standardIcon(QStyle::SP_DirIcon);
             } else if (item->getType() == PACKAGE) {
                 QString name = ((PackageItem*) item)->package()->getQualifiedName();
 
