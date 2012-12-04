@@ -21,7 +21,10 @@ SOURCES += main.cpp\
     packagetreeitem.cpp \
     packagetreemodel.cpp \
     packagetreesortfilterproxymodel.cpp \
-    packageitem.cpp
+    packageitem.cpp \
+    tinisat/Cnf.cpp \
+    tinisat/CnfManager.cpp \
+    tinisat/SatSolver.cpp
 
 HEADERS  += mainwindow.h \
     packageitemdelegate.h \
@@ -31,7 +34,10 @@ HEADERS  += mainwindow.h \
     packagetreeitem.h \
     packagetreemodel.h \
     packagetreesortfilterproxymodel.h \
-    packageitem.h
+    packageitem.h \
+    tinisat/Cnf.h \
+    tinisat/CnfManager.h \
+    tinisat/SatSolver.h
 
 FORMS    += mainwindow.ui
 
