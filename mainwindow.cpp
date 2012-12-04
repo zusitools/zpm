@@ -99,7 +99,10 @@ void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
     QModelIndex itemIndex = ui->treeView->indexAt(pos);
 
     QMenu *menu = new QMenu;
-    menu->addAction(QString::number(itemIndex.row()), this, SLOT(test_slot()));
+    menu->addAction(QIcon(":/zpm/icons/keepinstalled.xpm"), tr("Keep"), this, SLOT(test_slot()));
+    menu->addAction(QIcon(":/zpm/icons/del.xpm"), tr("Delete"), this, SLOT(test_slot()));
+    menu->addAction(QIcon(":/zpm/icons/update.xpm"), tr("Update"), this, SLOT(test_slot()));
+    menu->addAction(QIcon(":/zpm/icons/update.xpm"), tr("Force update"), this, SLOT(test_slot()));
     menu->exec(ui->treeView->mapToGlobal(pos));
 }
 
