@@ -27,9 +27,6 @@ void PackageItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
             rect.setWidth(22);
             rect.setHeight(16);
 
-
-            QIcon("icons/noinst.xpm").paint(painter, rect);
-
             switch (package->state()) {
                 case AUTODELETE:
                     QIcon(":/zpm/icons/autodel.xpm").paint(painter, rect);
