@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>722</width>
-    <height>402</height>
+    <width>1143</width>
+    <height>606</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Zusi Package Manager</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="zpm.qrc">
+    <normaloff>:/zpm/icons/packagemanager.png</normaloff>:/zpm/icons/packagemanager.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -26,7 +30,7 @@
       <widget class="QWidget" name="widget" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
+         <horstretch>1</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
@@ -34,7 +38,7 @@
       <widget class="QTreeView" name="treeView">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
+         <horstretch>2</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
@@ -51,6 +55,9 @@
        </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::ExtendedSelection</enum>
        </property>
        <property name="iconSize">
         <size>
@@ -77,7 +84,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>722</width>
+     <width>1143</width>
      <height>19</height>
     </rect>
    </property>
@@ -112,7 +119,9 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="zpm.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>action_load_xml</sender>
