@@ -2,7 +2,7 @@
 #include <QList>
 #include <QStringList>
 
-Package::Package(QString qualifiedName, QString displayName, PackageState state)
+Package::Package(QString qualifiedName, QString displayName, PackageState state) : m_originalState(state)
 {
     this->qualifiedName = qualifiedName;
 

@@ -33,12 +33,14 @@ public:
     QString getQualifiedName();
     QString getDisplayName();
     PackageState state() { return m_state; }
+    PackageState originalState() { return m_originalState; }
     void setState(PackageState state) { m_state = state; }
 
 private:
     QString qualifiedName;
     QString displayName;
     PackageState m_state;
+    const PackageState m_originalState;
     QList<PackageVersion *> *versions;
     PackageVersion *installedVersion;
 };
