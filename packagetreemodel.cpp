@@ -213,7 +213,7 @@ void PackageTreeModel::insertPackage(Package *package) {
         bool foundParent = false;
 
         for (int j = 0; j < parent->subfolderCount(); j++) {
-            if (parent->subfolder(j)->getName() == splitPath.at(i)) {
+            if (parent->subfolder(j)->getName().toLower() == splitPath.at(i).toLower()) {
                 foundParent = true;
                 parent = parent->subfolder(j);
                 break;
