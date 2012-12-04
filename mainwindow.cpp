@@ -65,7 +65,8 @@ void MainWindow::loadRepoData()
         for (int i = 0; i < packageNodes.count(); i++) {
             if (packageNodes.at(i).nodeName() == "package") {
                 packages->append(new Package(packageNodes.at(i).attributes().namedItem("name").nodeValue(),
-                                             packageNodes.at(i).attributes().namedItem("displayname").nodeValue()));
+                                             packageNodes.at(i).attributes().namedItem("displayname").nodeValue(),
+                                             qrand() % 2 == 0 ? NOTINSTALLED : KEEPINSTALLED));
             }
         }
 
@@ -106,14 +107,21 @@ void MainWindow::packageCheckStateChanged(QModelIndex index)
 {
     Package *package = ((PackageItem*)index.internalPointer())->package();
 
-    // just for demonstration ATM
     switch (package->state()) {
-        case INSTALL:
         case KEEPINSTALLED:
-            package->setState(NOTINSTALLED);
+            package->setState(UPDATE);
+            break;
+        case UPDATE:
+            package->setState(DELETE);
+            break;
+        case DELETE:
+            package->setState(package->originalState());
             break;
         case NOTINSTALLED:
             package->setState(INSTALL);
+            break;
+        case INSTALL:
+            package->setState(package->originalState());
             break;
         default:
             break;
