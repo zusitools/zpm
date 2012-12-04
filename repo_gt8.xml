@@ -1,14 +1,277 @@
 <root>
-	<spec-version>1</spec-version>
-
-	<package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M" displayname="GT8-100D/2S-M" type="fzg" license="zusi">
-		<description>GT8-100D/2S-M der Stadtbahn Karlsruhe</description>
-		
-		<version name="1.0">
-			<!-- URL? Einzelne Packages als ZIP? -->
-			<file path="Altlack/…" sha1="…" /> <!-- relativer Pfad -->
-			<dependency package="…" versions="…" />
-			<dependency file="…" versions="…" /> <!-- package oder file? -->
-		</version>
-	</package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/GT8-100D_2S-M_A.rv.fzg">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_HS_aus.wav"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_bremse-60.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB V4000.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB H00.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_Trennschuetz.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/Zeiger_V.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB Befehl01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoSchalter PZB Befehl01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/09.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_Luefter.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB E4000.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/schrift14.font.xml"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/14.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/10.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/19.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/GT8-100D_2S-M_A.rv.fzg"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Sounds/Generische_Sounds/FbV_D2.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM Tueren00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB Zugart U00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/HG_Demo.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/Zeiger_rot.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Sounds/Generische_Sounds/TB0.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/15.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Gemeinsame_Daten/Einheitslok_gemeinsamer_Fst_Sound.fzg"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Sounds/Generische_Sounds/Rischa_alt_nach_V_R.wav"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_rollen-120.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB V4001.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Sounds/Generische_Sounds/Weiche.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/17.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB S01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Demo.ftd"/>
+      <file path="RollingStock/Deutschland/Epoche4/Elektroloks/BRD/120/Sounds/120_Schallsender.wav"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_Luftpresser.wav"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_Luftstrom.wav"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_rollen-80.wav"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_fahren-80.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoSchalter Fahrtrichtung01.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_rollen-40.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoSchalter Fahrtrichtung02.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB 1000Hz01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/25.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB Zugart U01.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_Kurve.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/04.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Sounds/Generische_Sounds/Steinbruecke.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/Zeiger_gelb.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB B01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB Pruefen01.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_Tunnel.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/26.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoSchalter PZB Wachsam01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/zeigerspitzeorange.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM Tueren01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB Ue01.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Gemeinsame_Daten/Einheitslok_gemeinsamer_Sound.fzg"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/21.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoSchalter PZB Befehl00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB Pruefen00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB Befehl00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB Ende01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/08.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB 1000Hz00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB 500Hz00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/27.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB Ende00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM Sifa01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/23.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoSchalter Fahrtrichtung03.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoSchalter PZB Frei00.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_schaltwerk.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB 500Hz01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB Zugart M01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Sounds/Sifa/Sifa.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/22.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/24.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/13.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche4/Elektroloks/BRD/120/Sounds/120_Hintergrund.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/schrift14.dds"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB B00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB Zugart O00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB S00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/05.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_HS_ein.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB G01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM Sifa00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/06.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB Zugart O01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/zeigerspitzeweiss.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB EL00.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_Stahlbruecke.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM Hauptschalter00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/18.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_fahren-40.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Sounds/Vorlagen/Weiche.component.fzg"/>
+      <file path="RollingStock/Deutschland/Epoche4/Elektroloks/BRD/120/Sounds/120_PZB.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM PZB Zugart M00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB E4001.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/20.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB EL01.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_FMfreq.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/03.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_bremsen.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoSchalter PZB Frei01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/07.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Sounds/Generische_Sounds/DynBremse_D5.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB G00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoSchalter PZB Wachsam00.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_FM.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB H01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM Hauptschalter01.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/12.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Sounds/Vorlagen/Steinbruecke.component.fzg"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/02.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/16.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/11.bmp"/>
+      <file path="RollingStock/Deutschland/Epoche3/Elektroloks/BRD/Einheitsloks/Sounds/DB_110/110_Handrad_1.wav"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoSchalter Fahrtrichtung00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Zugkraft/00.bmp"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Demoftd/Bitmaps/DemoLM LZB Ue00.bmp"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_A_Neulack.lod.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_A_Altlack.lod.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_A_RegioBistro.lod.ls3"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod2.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod2.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod2.ls3"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Beleuchtung.lod.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Beleuchtung.lod.ls3"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Komponenten/Beleuchtung/Licht_Textur.dds"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Komponenten/Beleuchtung/Licht_Weiss_vorne.ls3"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Komponenten/Beleuchtung/Licht_Weiss_vorne.lsb"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Komponenten/Beleuchtung/Licht_Rot_hinten.lsb"/>
+      <file path="RollingStock/Deutschland/Gemeinsame_Daten/Komponenten/Beleuchtung/Licht_Rot_hinten.ls3"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-unbeleuchtet.lod1.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-unbeleuchtet.lod1.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-unbeleuchtet.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/gt8-100d_2s-m-textur-innen.dds"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Zielanzeigen/GT8-100D-2S-M_AB_Zielanzeigen.lod1.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Zielanzeigen/zielschilder-demo.dds"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Zielanzeigen/zielnummer.dds"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Zielanzeigen/zielanzeigen-seite.dds"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Zielanzeigen/GT8-100D-2S-M_AB_Zielanzeigen.lod1.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Zielanzeigen/GT8-100D-2S-M_AB_Zielanzeigen.lod1.ls3"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-beleuchtet.lod1.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-beleuchtet.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-beleuchtet.lod1.lsb"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/gt8-100d_2s-m-textur-innen.dds"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/gt8-100d_2s-m_textur-altlack.dds">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/gt8-100d_2s-m_textur-altlack.dds"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/gt8-100d_2s-m-textur-innen.dds">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/gt8-100d_2s-m-textur-innen.dds"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod1.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod1.lsb"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/gt8-100d_2s-m_textur-altlack.dds"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod1.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod1.lsb"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_A_Altlack.lod.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_A_Wagenkasten_Altlack.lod1.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_AB_Drehgestell-hinten_Altlack.lod2.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_AB_Altlack.lod3.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_A_Altlack.lod.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_AB_Drehgestell-hinten_Altlack.lod1.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_A_Wagenkasten_Altlack.lod2.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_AB_Drehgestell-hinten_Altlack.lod2.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_A_Wagenkasten_Altlack.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_A_Altlack.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_AB_Altlack.lod2.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_AB_Altlack.lod3.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_A_Wagenkasten_Altlack.lod2.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/GT8-100D-2S-M_AB_Drehgestell-hinten_Altlack.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Beleuchtung.lod.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-unbeleuchtet.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-beleuchtet.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Zielanzeigen/GT8-100D-2S-M_AB_Zielanzeigen.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod2.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod2.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/gt8-100d_2s-m_textur-altlack.dds"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_A_RegioBistro.lod.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_AB_RegioBistro.lod3.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_AB_Drehgestell-hinten_RegioBistro.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_A_Wagenkasten_RegioBistro.lod1.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_AB_Drehgestell-hinten_RegioBistro.lod2.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_AB_RegioBistro.lod2.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/gt8-100d_2s-m_textur-regiobistro.dds"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_A_Wagenkasten_RegioBistro.lod2.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_A_RegioBistro.lod.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_AB_RegioBistro.lod3.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_AB_Drehgestell-hinten_RegioBistro.lod1.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_A_RegioBistro.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_A_Wagenkasten_RegioBistro.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_AB_Drehgestell-hinten_RegioBistro.lod2.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/RegioBistro/GT8-100D-2S-M_A_Wagenkasten_RegioBistro.lod2.lsb"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Beleuchtung.lod.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod2.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-beleuchtet.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Zielanzeigen/GT8-100D-2S-M_AB_Zielanzeigen.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod2.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-unbeleuchtet.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod1.ls3"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_A_Neulack.lod.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_A_Neulack.lod.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_AB_Drehgestell-hinten_Neulack.lod1.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_AB_Neulack.lod2.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_A_Wagenkasten_Neulack.lod1.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_AB_Drehgestell-hinten_Neulack.lod2.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_A_Wagenkasten_Neulack.lod2.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_AB_Neulack.lod3.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_AB_Drehgestell-hinten_Neulack.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_A_Neulack.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_A_Wagenkasten_Neulack.lod1.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_AB_Neulack.lod3.ls3"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_AB_Drehgestell-hinten_Neulack.lod2.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/gt8-100d_2s-m_textur-neulack.dds"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Neulack/GT8-100D-2S-M_A_Wagenkasten_Neulack.lod2.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Beleuchtung.lod.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-unbeleuchtet.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Innen/GT8-100D-2S-M_AB_Innen-beleuchtet.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/Zielanzeigen/GT8-100D-2S-M_AB_Zielanzeigen.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod2.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Fensterscheiben.lod1.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod2.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod1.ls3"/>
+    </version>
+  </package>
+  <package name="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod2.ls3">
+    <version>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod2.lsb"/>
+      <file path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Gemeinsame_Daten/GT8-100D-2S-M_AB_Drehgestell-vorne.lod2.ls3"/>
+      <dependency path="RollingStock/Deutschland/Epoche5/Elektrotriebwagen/Stadtbahn_Karlsruhe/GT8-100D_2S-M/3D-Daten/Altlack/gt8-100d_2s-m_textur-altlack.dds"/>
+    </version>
+  </package>
 </root>
+
