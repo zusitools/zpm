@@ -118,21 +118,7 @@ QModelIndex PackageTreeModel::parent(const QModelIndex &child) const
         return QModelIndex();
     }
 
-    Folder *parent = item->parentFolder();
-
-    for (int i = 0; i < parent->packageCount(); i++) {
-        if (parent->package(i) == item) {
-            return createIndex(i, 0, parent);
-        }
-    }
-
-    for (int i = 0; i < parent->subfolderCount(); i++) {
-        if (parent->subfolder(i) == item) {
-            return createIndex(i + parent->packageCount(), 0, parent);
-        }
-    }
-
-    return QModelIndex();
+    return itemToIndex(item->parentFolder());
 }
 
 Qt::ItemFlags PackageTreeModel::flags(const QModelIndex &index) const
@@ -192,6 +178,31 @@ Folder *PackageTreeModel::indexToFolder(const QModelIndex &index) const
     } else {
         return static_cast<Folder*>(index.internalPointer());
     }
+}
+
+QModelIndex PackageTreeModel::itemToIndex(PackageTreeItem *item) const
+{
+    Folder *parent = item->parentFolder();
+
+    if (parent == NULL) {
+        return QModelIndex();
+    }
+
+    if (item->getType() == PACKAGE) {
+        for (int i = 0; i < parent->packageCount(); i++) {
+            if (parent->package(i) == item) {
+                return createIndex(i, 0, item);
+            }
+        }
+    } else { // item->getType() == FOLDER
+        for (int i = 0; i < parent->subfolderCount(); i++) {
+            if (parent->subfolder(i) == item) {
+                return createIndex(i + parent->packageCount(), 0, item);
+            }
+        }
+    }
+
+    return QModelIndex();
 }
 
 void PackageTreeModel::insertPackage(Package *package) {

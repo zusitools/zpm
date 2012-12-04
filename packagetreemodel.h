@@ -28,6 +28,7 @@ public:
 
 private:
     inline Folder *indexToFolder(const QModelIndex &index) const;
+    QModelIndex itemToIndex(PackageTreeItem *item) const;
     void insertPackage(Package *package);
     Folder *rootFolder;
     
