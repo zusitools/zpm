@@ -69,23 +69,23 @@ QVariant PackageTreeModel::data(const QModelIndex &index, int role) const
         else if (role == Qt::DecorationRole && index.column() == 0)
         {
             if (item->getType() == FOLDER) {
-                return QIcon("icons/folder.png"); // TODO os specific icons
+                return QIcon(":/zpm/icons/folder.png"); // TODO os specific icons
             } else if (item->getType() == PACKAGE) {
                 QString name = ((PackageItem*) item)->package()->getQualifiedName();
 
                 // TODO specify package type in XML
                 if (name.endsWith(".fpn")) {
-                    return QIcon("icons/timetable.png");
+                    return QIcon(":/zpm/icons/timetable.png");
                 } else if (name.endsWith(".dds")) {
-                    return QIcon("icons/image.png");
+                    return QIcon(":/zpm/icons/image.png");
                 } else if (name.endsWith(".ls3")) {
                     if (name.endsWith(".lod.ls3")) {
-                        return QIcon("icons/lodls3.png");
+                        return QIcon(":/zpm/icons/lodls3.png");
                     }
 
-                    return QIcon("icons/lod1234ls3.png");
+                    return QIcon(":/zpm/icons/lod1234ls3.png");
                 }
-                return QIcon("icons/package.png");
+                return QIcon(":/zpm/icons/package.png");
             }
         }
     }

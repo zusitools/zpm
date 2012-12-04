@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/zpm">
+        <file>icons/autodel.xpm</file>
+        <file>icons/autodel_disabled.xpm</file>
+        <file>icons/del_disabled.xpm</file>
+        <file>icons/image.png</file>
+        <file>icons/autoinstall.xpm</file>
+        <file>icons/autoinstall_disabled.xpm</file>
+        <file>icons/install.xpm</file>
+        <file>icons/install_disabled.xpm</file>
+        <file>icons/lodls3.png</file>
+        <file>icons/noinst.xpm</file>
+        <file>icons/taboo.xpm</file>
+        <file>icons/taboo_disabled.xpm</file>
+        <file>icons/noinst_disabled.xpm</file>
+        <file>icons/package.png</file>
+        <file>icons/timetable.png</file>
+        <file>icons/update.xpm</file>
+        <file>icons/autoupdate.xpm</file>
+        <file>icons/autoupdate_disabled.xpm</file>
+        <file>icons/keepinstalled.xpm</file>
+        <file>icons/keepinstalled_disabled.xpm</file>
+        <file>icons/del.xpm</file>
+        <file>icons/lod1234ls3.png</file>
+        <file>icons/packagemanager.png</file>
+        <file>icons/protected.xpm</file>
+        <file>icons/update_disabled.xpm</file>
+        <file>icons/protected_disabled.xpm</file>
+        <file>icons/folder.png</file>
+    </qresource>
+</RCC>

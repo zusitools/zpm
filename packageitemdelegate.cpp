@@ -32,33 +32,34 @@ void PackageItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
             switch (package->state()) {
                 case AUTODELETE:
-                    QIcon("icons/autodel.xpm").paint(painter, rect);
+                    QIcon(":/zpm/icons/autodel.xpm").paint(painter, rect);
                     break;
                 case AUTOINSTALL:
-                    QIcon("icons/autoinstall.xpm").paint(painter, rect);
+                    QIcon(":/zpm/icons/autoinstall.xpm").paint(painter, rect);
                     break;
                 case AUTOUPDATE:
-                    QIcon("icons/autoupdate.xpm").paint(painter, rect);
+                    QIcon(":/zpm/icons/autoupdate.xpm").paint(painter, rect);
                     break;
                 case DELETE:
-                    QIcon("icons/del.xpm").paint(painter, rect);
+                    QIcon(":/zpm/icons/del.xpm").paint(painter, rect);
                     break;
                 case INSTALL:
-                    QIcon("icons/install.xpm").paint(painter, rect);
+                    QIcon(":/zpm/icons/install.xpm").paint(painter, rect);
                     break;
                 case KEEPINSTALLED:
-                    QIcon("icons/keepinst.xpm").paint(painter, rect);
+                    QIcon(":/zpm/icons/keepinstalled.xpm").paint(painter, rect);
                     break;
                 case NOTINSTALLED:
+                    QIcon(":/zpm/icons/noinst.xpm").paint(painter, rect);
                     break;
                 case PROTECTED:
-                    QIcon("icons/protected.xpm").paint(painter, rect);
+                    QIcon(":/zpm/icons/protected.xpm").paint(painter, rect);
                     break;
                 case TABOO:
-                    QIcon("icons/taboo.xpm").paint(painter, rect);
+                    QIcon(":/zpm/icons/taboo.xpm").paint(painter, rect);
                     break;
                 case UPDATE:
-                    QIcon("icons/update.xpm").paint(painter, rect);
+                    QIcon(":/zpm/icons/update.xpm").paint(painter, rect);
                     break;
             }
         }

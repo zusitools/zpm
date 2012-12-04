@@ -36,3 +36,6 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 TRANSLATIONS = zpm_de.ts
+
+RESOURCES += \
+    zpm.qrc
