@@ -71,7 +71,21 @@ QVariant PackageTreeModel::data(const QModelIndex &index, int role) const
             if (item->getType() == FOLDER) {
                 return QIcon("icons/folder.png"); // TODO os specific icons
             } else if (item->getType() == PACKAGE) {
-                return QIcon("icons/package.png"); // TODO file specific icons
+                QString name = ((PackageItem*) item)->package()->getQualifiedName();
+
+                // TODO specify package type in XML
+                if (name.endsWith(".fpn")) {
+                    return QIcon("icons/timetable.png");
+                } else if (name.endsWith(".dds")) {
+                    return QIcon("icons/image.png");
+                } else if (name.endsWith(".ls3")) {
+                    if (name.endsWith(".lod.ls3")) {
+                        return QIcon("icons/lodls3.png");
+                    }
+
+                    return QIcon("icons/lod1234ls3.png");
+                }
+                return QIcon("icons/package.png");
             }
         }
     }
