@@ -77,9 +77,10 @@ void MainWindow::loadRepoData()
     PackageTreeSortFilterProxyModel *sortFilterModel = new PackageTreeSortFilterProxyModel();
     sortFilterModel->setSourceModel(treeModel);
 
+    ui->treeView->setModel(sortFilterModel);
+    connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(treeViewSelectionChanged(QItemSelection,QItemSelection)));
     connect(treeModel, SIGNAL(packageCheckStateChanged(QModelIndex)), this, SLOT(packageCheckStateChanged(QModelIndex)));
 
-    ui->treeView->setModel(sortFilterModel);
     ui->treeView->sortByColumn(0, Qt::AscendingOrder);
     ui->treeView->expandAll();
 
@@ -128,5 +129,21 @@ void MainWindow::packageCheckStateChanged(QModelIndex index)
             break;
         default:
             break;
+    }
+}
+
+void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    Q_UNUSED(deselected);
+
+    ui->infoTextEdit->clear();
+
+    if (selected.count() == 1) {
+        QModelIndex index = selected.at(0).indexes().at(0);
+        PackageTreeSortFilterProxyModel *proxyModel = (PackageTreeSortFilterProxyModel*) index.model();
+        PackageTreeItem *item = (PackageTreeItem*)(proxyModel->mapToSource(index).internalPointer());
+        if (item->getType() == PACKAGE) {
+            ui->infoTextEdit->setPlainText(((PackageItem*)item)->package()->getQualifiedName());
+        }
     }
 }

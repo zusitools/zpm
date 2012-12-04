@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStandardItem>
+#include <QItemSelection>
 #include <QtXml/QDomElement>
 #include "package.h"
 
@@ -24,6 +25,7 @@ public slots:
 private slots:
     void on_treeView_customContextMenuRequested(const QPoint &pos);
     void packageCheckStateChanged(QModelIndex index);
+    void treeViewSelectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 
 private:
     Ui::MainWindow *ui;
