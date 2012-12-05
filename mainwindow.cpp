@@ -39,16 +39,17 @@ void MainWindow::loadRepoData()
     myTimer.start();
 
     // Read XML files
-    QList<QFile*> xmlFiles;
-    xmlFiles << new QFile("repo_gt8.xml");
-    xmlFiles << new QFile("repo_langeland.xml");
-    xmlFiles << new QFile("repo_driburg.xml");
-    xmlFiles << new QFile("repo_altenbeken.xml");
-    xmlFiles << new QFile("repo_timetable.xml");
+    QStringList xmlFiles;
+    xmlFiles << "repo_gt8.xml";
+    xmlFiles << "repo_langeland.xml";
+    xmlFiles << "repo_driburg.xml";
+    xmlFiles << "repo_altenbeken.xml";
+    xmlFiles << "repo_timetable.xml";
 
     QMap<QString, PackageFile *> fileNames;
 
-    foreach (QFile* xmlFile, xmlFiles) {
+    foreach (QString fileName, xmlFiles) {
+        QFile *xmlFile = new QFile(fileName);
         if (!xmlFile->open(QIODevice::ReadOnly)) {
             QMessageBox::warning(this, tr("Unable to open file"), xmlFile->errorString());
             continue;
@@ -75,25 +76,23 @@ void MainWindow::loadRepoData()
 
                 for (int j = 0; j < packageNodes.at(i).childNodes().at(0).childNodes().count(); j++) {
                     QDomNode node = packageNodes.at(i).childNodes().at(0).childNodes().at(j);
-
-                    // TODO rename PackageVersionFile => File / PackageFile
                     QString fileName = node.attributes().namedItem("path").nodeValue();
 
                     if (!fileNames.contains(fileName)) {
                         file = new PackageFile(fileName);
+                        fileNames.insert(fileName, file);
                     } else {
                         file = fileNames[fileName];
                     }
 
                     if (node.nodeName() == "file") {
                         fileList << file;
-
                     } else if (node.nodeName() == "dependency") {
                         package->addDependency(file);
                     }
                 }
 
-                PackageVersion *version = new PackageVersion(fileList);
+                PackageVersion *version = new PackageVersion(fileList, package, fileName);
                 package->appendVersion(version);
                 package->setInstalledVersion(version);
 
@@ -121,8 +120,6 @@ void MainWindow::loadRepoData()
     ui->treeView->resizeColumnToContents(1);
     ui->treeView->resizeColumnToContents(2);
     ui->treeView->resizeColumnToContents(3);
-
-    qDeleteAll(xmlFiles);
 
     qDebug() << "Loading model took " + QString::number(myTimer.elapsed()) + " ms";
 }
@@ -177,16 +174,22 @@ void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const 
         PackageTreeItem *item = (PackageTreeItem*)(proxyModel->mapToSource(index).internalPointer());
         if (item->getType() == PACKAGE) {
             Package *package = ((PackageItem*)item)->package();
-            QString text = package->getQualifiedName() + " " + QString::number(package->installedVersion()->files()->count()) + "\n";
+            QString text = package->getQualifiedName() + "\n\nFiles:";
 
             for (int i = 0; i < package->installedVersion()->files()->count(); i++) {
                 text += "\n" + package->installedVersion()->files()->at(i)->name();
             }
 
-            text += "\n";
+            text += "\n\nDependencies:";
 
             for (int i = 0; i < package->dependencies().count(); i++) {
                 text += "\n" + package->dependencies().at(i)->name();
+
+                for (int j = 0; j < package->dependencies().at(i)->providers()->count(); j++) {
+                    text += "\n     provided by " + package->dependencies().at(i)->providers()->at(j)->package()->getQualifiedName()
+                            + " in repo " + package->dependencies().at(i)->providers()->at(j)->repo();
+                }
+
             }
 
             ui->infoTextEdit->setPlainText(text);

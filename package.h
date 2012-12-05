@@ -4,6 +4,10 @@
 #include <QList>
 #include <QVariant>
 #include "packageversion.h"
+#include "packagefile.h"
+
+class PackageVersion;
+class PackageFile;
 
 /**
  * @brief The possible installation states a package can have.
