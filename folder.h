@@ -24,8 +24,6 @@ public:
     int subfolderCount() const;
     int packageCount() const;
 
-    int totalSubItemsCount() const;
-
     QString getName();
 
     PackageTreeItemType getType() { return FOLDER; }
