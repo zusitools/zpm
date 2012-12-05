@@ -29,9 +29,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QList<QStandardItem *> prepareRow(const QString &first,
-                                                    const QString &second,
-                                                    const QString &third);
+    QList<Package *> packages;
     void nodeToItem(const QDomNode &node, QStandardItem *parent);
 };
 

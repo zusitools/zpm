@@ -12,13 +12,13 @@ Package::Package(QString qualifiedName, QString displayName, PackageState state)
         this->displayName = displayName;
     }
 
-    this->versions = new QList<PackageVersion *>();
+    this->m_versions = new QList<PackageVersion *>();
     this->m_state = state;
 }
 
 Package::~Package()
 {
-    qDeleteAll(*versions);
+    qDeleteAll(*m_versions);
 }
 
 QString Package::getQualifiedName()

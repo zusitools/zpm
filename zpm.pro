@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     packageitem.cpp \
     tinisat/Cnf.cpp \
     tinisat/CnfManager.cpp \
-    tinisat/SatSolver.cpp
+    tinisat/SatSolver.cpp \
+    packagefile.cpp
 
 HEADERS  += mainwindow.h \
     packageitemdelegate.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     packageitem.h \
     tinisat/Cnf.h \
     tinisat/CnfManager.h \
-    tinisat/SatSolver.h
+    tinisat/SatSolver.h \
+    packagefile.h
 
 FORMS    += mainwindow.ui
 

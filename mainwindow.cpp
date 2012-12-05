@@ -10,6 +10,7 @@
 #include "packageitemdelegate.h"
 #include "packageitem.h"
 #include "package.h"
+#include "packagefile.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -44,8 +45,7 @@ void MainWindow::loadRepoData()
     xmlFiles << new QFile("repo_altenbeken.xml");
     xmlFiles << new QFile("repo_timetable.xml");
 
-    // TODO this has to be deleted at some point
-    QList<Package *> *packages = new QList<Package *>();
+    QMap<QString, PackageFile *> fileNames;
 
     foreach (QFile* xmlFile, xmlFiles) {
         if (!xmlFile->open(QIODevice::ReadOnly)) {
@@ -64,16 +64,48 @@ void MainWindow::loadRepoData()
         QDomNodeList packageNodes = xmlDoc.documentElement().childNodes();
         for (int i = 0; i < packageNodes.count(); i++) {
             if (packageNodes.at(i).nodeName() == "package") {
-                packages->append(new Package(packageNodes.at(i).attributes().namedItem("name").nodeValue(),
-                                             packageNodes.at(i).attributes().namedItem("displayname").nodeValue(),
-                                             qrand() % 2 == 0 ? NOTINSTALLED : KEEPINSTALLED));
+                Package *package = new Package(packageNodes.at(i).attributes().namedItem("name").nodeValue(),
+                                               packageNodes.at(i).attributes().namedItem("displayname").nodeValue(),
+                                               qrand() % 2 == 0 ? NOTINSTALLED : KEEPINSTALLED);
+                packages.append(package);
+
+                QList<PackageFile *> fileList;
+                PackageFile* file;
+
+                for (int j = 0; j < packageNodes.at(i).childNodes().at(0).childNodes().count(); j++) {
+                    QDomNode node = packageNodes.at(i).childNodes().at(0).childNodes().at(j);
+
+                    // TODO rename PackageVersionFile => File / PackageFile
+                    QString fileName = node.attributes().namedItem("path").nodeValue();
+
+                    if (!fileNames.contains(fileName)) {
+                        file = new PackageFile(fileName);
+                    } else {
+                        file = fileNames[fileName];
+                    }
+
+                    if (node.nodeName() == "file") {
+                        fileList << file;
+
+                    } else if (node.nodeName() == "dependency") {
+                        package->addDependency(file);
+                    }
+                }
+
+                PackageVersion *version = new PackageVersion(fileList);
+                package->appendVersion(version);
+                package->setInstalledVersion(version);
+
+                for (int j = 0; j < fileList.count(); j++) {
+                    fileList.at(j)->addProvider(version);
+                }
             }
         }
 
         xmlFile->close();
     }
 
-    PackageTreeModel *treeModel = new PackageTreeModel(packages);
+    PackageTreeModel *treeModel = new PackageTreeModel(&packages);
     PackageTreeSortFilterProxyModel *sortFilterModel = new PackageTreeSortFilterProxyModel();
     sortFilterModel->setSourceModel(treeModel);
 
@@ -143,7 +175,20 @@ void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const 
         PackageTreeSortFilterProxyModel *proxyModel = (PackageTreeSortFilterProxyModel*) index.model();
         PackageTreeItem *item = (PackageTreeItem*)(proxyModel->mapToSource(index).internalPointer());
         if (item->getType() == PACKAGE) {
-            ui->infoTextEdit->setPlainText(((PackageItem*)item)->package()->getQualifiedName());
+            Package *package = ((PackageItem*)item)->package();
+            QString text = package->getQualifiedName() + " " + QString::number(package->installedVersion()->files()->count()) + "\n";
+
+            for (int i = 0; i < package->installedVersion()->files()->count(); i++) {
+                text += "\n" + package->installedVersion()->files()->at(i)->name();
+            }
+
+            text += "\n";
+
+            for (int i = 0; i < package->dependencies().count(); i++) {
+                text += "\n" + package->dependencies().at(i)->name();
+            }
+
+            ui->infoTextEdit->setPlainText(text);
         }
     }
 }

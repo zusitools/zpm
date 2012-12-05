@@ -1,5 +1,6 @@
 #include "packageversion.h"
 
-PackageVersion::PackageVersion()
+PackageVersion::PackageVersion(QList<PackageFile *> files)
 {
+    m_files = files;
 }
