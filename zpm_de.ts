@@ -10,42 +10,47 @@
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="86"/>
+        <location filename="mainwindow.ui" line="53"/>
+        <source>Search</source>
+        <translation>Suchen</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="126"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="105"/>
+        <location filename="mainwindow.ui" line="145"/>
         <source>&amp;Apply changes</source>
         <translation>Ä&amp;nderungen übernehmen</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="110"/>
+        <location filename="mainwindow.ui" line="150"/>
         <source>Load &amp;XML</source>
         <translation>&amp;XML laden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="52"/>
+        <location filename="mainwindow.cpp" line="51"/>
         <source>Unable to open file</source>
         <translation>Kann Datei nicht öffnen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="101"/>
+        <location filename="mainwindow.cpp" line="129"/>
         <source>Keep</source>
         <translation>Behalten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="102"/>
+        <location filename="mainwindow.cpp" line="130"/>
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="103"/>
+        <location filename="mainwindow.cpp" line="131"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="104"/>
+        <location filename="mainwindow.cpp" line="132"/>
         <source>Force update</source>
         <translation>Unbedingt aktualisieren</translation>
     </message>
@@ -53,23 +58,23 @@
 <context>
     <name>PackageTreeModel</name>
     <message>
-        <location filename="packagetreemodel.cpp" line="151"/>
+        <location filename="packagetreemodel.cpp" line="163"/>
         <source>Name</source>
         <translatorcomment>Name</translatorcomment>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="packagetreemodel.cpp" line="153"/>
+        <location filename="packagetreemodel.cpp" line="165"/>
         <source>Installed Version</source>
         <translation>Installierte Version</translation>
     </message>
     <message>
-        <location filename="packagetreemodel.cpp" line="155"/>
+        <location filename="packagetreemodel.cpp" line="167"/>
         <source>Available Version</source>
         <translation>Verfügbare Version</translation>
     </message>
     <message>
-        <location filename="packagetreemodel.cpp" line="157"/>
+        <location filename="packagetreemodel.cpp" line="169"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>

@@ -123,6 +123,17 @@ QModelIndex PackageTreeModel::parent(const QModelIndex &child) const
     return itemToIndex(item->parentFolder());
 }
 
+bool PackageTreeModel::hasChildren(const QModelIndex &parent) const
+{
+    if (!parent.isValid()) {
+        return true;
+    }
+
+    PackageTreeItem *item = static_cast<PackageTreeItem*>(parent.internalPointer());
+
+    return item->getType() == FOLDER && (((Folder*)item)->subfolderCount() > 0 || ((Folder*)item)->packageCount() > 0);
+}
+
 Qt::ItemFlags PackageTreeModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags result = 0;

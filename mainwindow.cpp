@@ -1,5 +1,6 @@
 #include <QtGui>
 #include <QDebug>
+#include <QRegExp>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 #include <QtXml/QDomNode>
@@ -190,5 +191,14 @@ void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const 
 
             ui->infoTextEdit->setPlainText(text);
         }
+    }
+}
+
+void MainWindow::on_lineEdit_textChanged(const QString &newValue)
+{
+    ((PackageTreeSortFilterProxyModel* )(ui->treeView->model()))->setFilterRegExp(QRegExp(newValue, Qt::CaseInsensitive));
+
+    if (!newValue.isEmpty()) {
+        ui->treeView->expandAll();
     }
 }

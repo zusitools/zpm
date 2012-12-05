@@ -27,6 +27,8 @@ private slots:
     void packageCheckStateChanged(QModelIndex index);
     void treeViewSelectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
 
+    void on_lineEdit_textChanged(const QString &newValue);
+
 private:
     Ui::MainWindow *ui;
     QList<Package *> packages;
