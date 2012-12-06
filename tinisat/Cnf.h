@@ -29,8 +29,9 @@ struct Cnf{
 	unsigned cc;	// clause count
 	int **clauses;	// 2-dim. array with entries same as in cnf file
 	unsigned lc;	// literal count
-	unsigned *cl;	// clause length
-	Cnf(char *fname);
-	~Cnf();
+    unsigned *cl;	// clause length
+
+    Cnf(unsigned vc, unsigned cc, int **clauses, unsigned lc, unsigned *cl);
+    ~Cnf();
 };
 #endif
