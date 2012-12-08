@@ -30,6 +30,8 @@ private slots:
 
     void on_lineEdit_textChanged(const QString &newValue);
 
+    void test_slot(QAction *action);
+
 private:
     Ui::MainWindow *ui;
     QMap<QString, Package *> packages;

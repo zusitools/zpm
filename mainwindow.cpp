@@ -333,12 +333,37 @@ void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
     // Retrieve model index of item at the position the context menu was opened
     QModelIndex itemIndex = ui->treeView->indexAt(pos);
 
-    QMenu *menu = new QMenu;
-    menu->addAction(QIcon(":/zpm/icons/keepinstalled.xpm"), tr("Keep"), this, SLOT(test_slot()));
-    menu->addAction(QIcon(":/zpm/icons/del.xpm"), tr("Delete"), this, SLOT(test_slot()));
-    menu->addAction(QIcon(":/zpm/icons/update.xpm"), tr("Update"), this, SLOT(test_slot()));
-    menu->addAction(QIcon(":/zpm/icons/update.xpm"), tr("Force update"), this, SLOT(test_slot()));
-    menu->exec(ui->treeView->mapToGlobal(pos));
+    PackageTreeSortFilterProxyModel *proxyModel = (PackageTreeSortFilterProxyModel*)ui->treeView->model();
+    PackageTreeItem *item = (PackageTreeItem*) (proxyModel->mapToSource(itemIndex).internalPointer());
+
+    if (item->getType() == PACKAGE) {
+        Package *package = ((PackageItem*)item)->package();
+        QMenu *menu = new QMenu;
+
+        switch (package->originalState()) {
+            case NOTINSTALLED: {
+                QAction *installAction = new QAction(QIcon(":/zpm/icons/install.xpm"), tr("Install"), this);
+                installAction->setData(qVariantFromValue((void*)package));
+                menu->addAction(installAction);
+                menu->addAction(QIcon(":/zpm/icons/taboo.xpm"), tr("Taboo -- Never install"), this, SLOT(test_slot(QAction *)));
+                menu->addAction(QIcon(":/zpm/icons/noinst.xpm"), tr("Do Not install"), this, SLOT(test_slot(QAction *)));
+                break;
+            }
+
+            case KEEPINSTALLED:
+            case PROTECTED:
+                menu->addAction(QIcon(":/zpm/icons/keepinstalled.xpm"), tr("Keep"), this, SLOT(test_slot(QAction *)));
+                menu->addAction(QIcon(":/zpm/icons/del.xpm"), tr("Delete"), this, SLOT(test_slot(QAction *)));
+                menu->addAction(QIcon(":/zpm/icons/update.xpm"), tr("Update"), this, SLOT(test_slot(QAction *)));
+                menu->addAction(QIcon(":/zpm/icons/update.xpm"), tr("Update unconditionally"), this, SLOT(test_slot(QAction *)));
+                menu->addAction(QIcon(":/zpm/icons/protected.xpm"), tr("Protected -- never modify"), this, SLOT(test_slot(QAction *)));
+                break;
+        }
+
+        connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(test_slot(QAction*)));
+
+        menu->exec(QCursor::pos());
+    }
 }
 
 void MainWindow::packageCheckStateChanged(QModelIndex index)
@@ -408,4 +433,18 @@ void MainWindow::on_lineEdit_textChanged(const QString &newValue)
     if (!newValue.isEmpty()) {
         ui->treeView->expandAll();
     }
+}
+
+void MainWindow::test_slot(QAction *action)
+{
+    Package *package = (Package*)action->data().value<void*>();
+    int* lit = (int*) calloc(2, sizeof(int));
+    lit[0] = variableNumber(package->installedVersion());
+    lit[1] = 0;
+
+    qDebug() << "setting variable" << lit[0];
+
+    cnf->addClauseWithExistingVars(lit, 2);
+
+    solve();
 }
