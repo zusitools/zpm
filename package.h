@@ -40,6 +40,7 @@ public:
     PackageState originalState() { return m_originalState; }
     void setState(PackageState state) { m_state = state; }
 
+    QList<PackageVersion *> *versions() { return m_versions; }
     void appendVersion(PackageVersion *version) { m_versions->append(version); }
     void setInstalledVersion(PackageVersion *version) { m_installedVersion = version; }
 
