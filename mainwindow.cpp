@@ -12,6 +12,8 @@
 #include "packageitem.h"
 #include "package.h"
 #include "packagefile.h"
+#include "tinisat/Cnf.h"
+#include "tinisat/SatSolver.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,6 +35,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+int MainWindow::variableNumber(PackageVersion *version) {
+    if (!variables.contains(version)) {
+        int index = variables.count() + 1; // indices must start at 1!
+        variables.insert(version, index);
+        return index;
+    } else {
+        return variables[version];
+    }
+}
+
+#define DEBUGCLAUSE() QString dbg = QString(""); for (unsigned int xx = 0; xx < clause_lengths[clause_index]; xx++) { dbg += QString::number(clauses[clause_index][xx]) + "(" + variables.key(qAbs(clauses[clause_index][xx]))->package()->getDisplayName() + "@" + variables.key(qAbs(clauses[clause_index][xx]))->repo() + ") | "; } qDebug() << dbg;
+
 void MainWindow::loadRepoData()
 {
     QTime myTimer;
@@ -47,6 +61,11 @@ void MainWindow::loadRepoData()
     xmlFiles << "repo_timetable.xml";
 
     QMap<QString, PackageFile *> fileNames;
+
+    // Total number of dependencies (needed for clause count)
+    int dependency_count = 0;
+    int provider_count = 0;
+    int installed_count = 0;
 
     foreach (QString fileName, xmlFiles) {
         QFile *xmlFile = new QFile(fileName);
@@ -66,12 +85,23 @@ void MainWindow::loadRepoData()
         QDomNodeList packageNodes = xmlDoc.documentElement().childNodes();
         for (int i = 0; i < packageNodes.count(); i++) {
             if (packageNodes.at(i).nodeName() == "package") {
-                Package *package = new Package(packageNodes.at(i).attributes().namedItem("name").nodeValue(),
-                                               packageNodes.at(i).attributes().namedItem("displayname").nodeValue(),
-                                               qrand() % 2 == 0 ? NOTINSTALLED : KEEPINSTALLED);
-                packages.append(package);
+                Package *package;
+                QString packageName = packageNodes.at(i).attributes().namedItem("name").nodeValue();
+
+                if (!packages.contains(packageName)) {
+                    package = new Package(packageName, packageNodes.at(i).attributes().namedItem("displayname").nodeValue(),
+                                          /*qrand() % 2 == 0 ?*/ NOTINSTALLED /*: KEEPINSTALLED*/);
+                    packages.insert(packageName, package);
+
+                    if (package->state() == KEEPINSTALLED) {
+                        installed_count++;
+                    }
+                } else {
+                    package = packages[packageName];
+                }
 
                 QList<PackageFile *> fileList;
+                QList<PackageFile *> dependencyList;
                 PackageFile* file;
 
                 for (int j = 0; j < packageNodes.at(i).childNodes().at(0).childNodes().count(); j++) {
@@ -88,16 +118,23 @@ void MainWindow::loadRepoData()
                     if (node.nodeName() == "file") {
                         fileList << file;
                     } else if (node.nodeName() == "dependency") {
-                        package->addDependency(file);
+                        dependencyList << file;
+                        dependency_count++;
                     }
                 }
 
                 PackageVersion *version = new PackageVersion(fileList, package, fileName);
+
+                foreach (PackageFile *dependency, dependencyList) {
+                    version->addDependency(dependency);
+                }
+
                 package->appendVersion(version);
                 package->setInstalledVersion(version);
 
                 for (int j = 0; j < fileList.count(); j++) {
                     fileList.at(j)->addProvider(version);
+                    provider_count++;
                 }
             }
         }
@@ -105,7 +142,8 @@ void MainWindow::loadRepoData()
         xmlFile->close();
     }
 
-    PackageTreeModel *treeModel = new PackageTreeModel(&packages);
+    QList<Package *> packageValues = packages.values();
+    PackageTreeModel *treeModel = new PackageTreeModel(&packageValues);
     PackageTreeSortFilterProxyModel *sortFilterModel = new PackageTreeSortFilterProxyModel();
     sortFilterModel->setSourceModel(treeModel);
 
@@ -122,6 +160,172 @@ void MainWindow::loadRepoData()
     ui->treeView->resizeColumnToContents(3);
 
     qDebug() << "Loading model took " + QString::number(myTimer.elapsed()) + " ms";
+    myTimer.restart();
+
+    unsigned clause_count = dependency_count + provider_count + installed_count; // we overestimate the number of conflicts clauses but that's OK
+    unsigned literal_count = 0;
+    unsigned clause_index = 0;
+    unsigned *clause_lengths = (unsigned*) calloc(clause_count, sizeof(unsigned));
+
+    int** clauses = (int **) calloc(clause_count, sizeof(int *));
+
+    if (clauses == NULL) {
+        QMessageBox::critical(this, tr("Error"), tr("Cannot allocate memory for dependency resolution"));
+        exit(1);
+    }
+
+    // DEBUG
+    /*clause_lengths[clause_index] = 1;
+    clauses[clause_index] = (int*) calloc(2, sizeof(int));
+    literal_count++;
+    clauses[clause_index][0] = 5;
+    clause_index++;*/
+    // END DEBUG
+
+    // dependency clauses
+    foreach (Package *package, packages) {
+        // TODO iterate over *all* versions, not just the currently installed one
+        foreach (PackageFile *dependency, package->installedVersion()->dependencies()) {
+
+            clause_lengths[clause_index] = dependency->providers()->count() + 1;
+            clauses[clause_index] = (int*)calloc(clause_lengths[clause_index] + 1, sizeof(int));
+
+            clauses[clause_index][0] = -variableNumber(package->installedVersion());
+            literal_count++;
+
+            for (int i = 0; i < dependency->providers()->count(); i++) {
+                clauses[clause_index][i + 1] = variableNumber(dependency->providers()->at(i));
+                literal_count++;
+            }
+
+            qDebug() << "dependency" << dependency->name();
+            DEBUGCLAUSE()
+
+            clause_index++;
+        }
+    }
+
+    qDebug() << "variable count" << variables.count();
+    qDebug() << "clause count" << clause_index;
+    qDebug() << "literal count" << literal_count;
+    qDebug();
+
+    // conflicts clauses
+    foreach (PackageFile *file, fileNames.values()) {
+        if (file->providers()->count() <= 2) {
+            continue;
+        }
+
+        for (int i = 0; i < file->providers()->count() - 1; i++) {
+            int index_i = variableNumber(file->providers()->at(i));
+
+            for (int j = i + 1; j < file->providers()->count(); j++) {
+                literal_count += 2;
+                clause_lengths[clause_index] = 2;
+                clauses[clause_index] = (int*)calloc(2 + 1, sizeof(int));
+
+                if (clauses[clause_index] == NULL) {
+                    QMessageBox::critical(this, tr("Error"), tr("Cannot allocate memory for dependency resolution"));
+                    exit(1);
+                }
+
+                clauses[clause_index][0] = -index_i;
+                clauses[clause_index][1] = -variableNumber(file->providers()->at(j));
+
+                qDebug() << "conflict" << file->name();
+                DEBUGCLAUSE()
+
+                clause_index++;
+            }
+        }
+    }
+
+    qDebug() << "variable count" << variables.count();
+    qDebug() << "clause count" << clause_index;
+    qDebug() << "literal count" << literal_count;
+    qDebug();
+
+    // TODO policy rules (keep installed packages => conflict when removing packages)
+    // Policy rules can be removed (negating all of their literals? using a special literal?)
+    foreach (Package *package, packages) {
+        if (package->state() != KEEPINSTALLED) {
+            continue;
+        }
+
+        clause_lengths[clause_index] = package->versions()->count();
+        literal_count += clause_lengths[clause_index];
+        clauses[clause_index] = (int*)calloc(clause_lengths[clause_index] + 1, sizeof(int));
+
+        if (clauses[clause_index] == NULL) {
+            QMessageBox::critical(this, tr("Error"), tr("Cannot allocate memory for dependency resolution"));
+            exit(1);
+        }
+
+        for (int i = 0; i < package->versions()->count(); i++) {
+            clauses[clause_index][i] = variableNumber(package->versions()->at(i));
+        }
+
+        qDebug() << "policy" << package->getQualifiedName();
+        DEBUGCLAUSE()
+
+        clause_index++;
+    }
+
+    clauses = (int **) realloc(clauses, clause_index * sizeof(int *));
+
+    qDebug() << "variable count" << variables.count();
+    qDebug() << "clause count" << clause_index;
+    qDebug() << "literal count" << literal_count;
+
+    cnf = new Cnf(variables.count(), clause_index, clauses, literal_count, clause_lengths);
+    qDebug() << "Creating dependencies took " + QString::number(myTimer.elapsed()) + " ms";
+
+    myTimer.restart();
+    solve();
+
+    qDebug() << "Solving took " + QString::number(myTimer.elapsed()) + " ms";
+}
+
+void MainWindow::solve() {
+    SatSolver solver(*cnf);
+
+    if (solver.run()) {
+        // solver.printSolution(stdout);
+        int vc;
+        int* values;
+
+        solver.getSolution(vc, values);
+
+        for (int i = 0; i < vc; i++) {
+            if (i < 10) qDebug() << values[i];
+
+            if (values[i] < 0) {
+                switch (variables.key(i)->package()->state()) {
+                    case KEEPINSTALLED:
+                        qDebug() << "auto deleting package" << variables.key(i)->package()->getQualifiedName();
+                        variables.key(i)->package()->setState(AUTODELETE);
+                        break;
+                    case INSTALL:
+                        qDebug() << "not installing package" << variables.key(i)->package()->getQualifiedName();
+                        variables.key(i)->package()->setState(NOTINSTALLED);
+                        break;
+                    default:
+                        break;
+                }
+            } else if (values[i] > 0) {
+                switch (variables.key(i)->package()->state()) {
+                    case NOTINSTALLED:
+                        qDebug() << "installing package" << variables.key(i)->package()->getQualifiedName();
+                        variables.key(i)->package()->setState(AUTOINSTALL);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        solver.printStats();
+    }
 }
 
 void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
