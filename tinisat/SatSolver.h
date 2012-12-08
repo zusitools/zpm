@@ -54,5 +54,6 @@ public:
 	bool run();
 	void printStats();
 	void printSolution(FILE *); 	
+    void getSolution(int &vc, int* &solution);
 };
 #endif

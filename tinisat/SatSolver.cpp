@@ -162,6 +162,19 @@ void SatSolver::printSolution(FILE *ofp){
 	fprintf(ofp, "0\n");
 }
 
+void SatSolver::getSolution(int &vc, int *&solution)
+{
+    vc = this->vc;
+    solution = (int*) calloc(vc, sizeof(int));
+    for(unsigned i = 1; i <= this->vc; i++) {
+        if(vars[i].value == _POSI) {
+            solution[i] = i;
+        } else if(vars[i].value == _NEGA) {
+            solution[i] = -i;
+        }
+    }
+}
+
 void SatSolver::printStats(){
 	printf("c %d decisions, %d conflicts, %d restarts\n", nDecisions, nConflicts, nRestarts);
 }
