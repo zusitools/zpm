@@ -45,16 +45,12 @@ public:
 
     PackageVersion *installedVersion() { return m_installedVersion; }
 
-    void addDependency(PackageFile *file) { m_dependencies.append(file); }
-    QList<PackageFile *> dependencies() { return m_dependencies; }
-
 private:
     QString qualifiedName;
     QString displayName;
     PackageState m_state;
     const PackageState m_originalState;
     QList<PackageVersion *> *m_versions;
-    QList<PackageFile *> m_dependencies;
     PackageVersion *m_installedVersion;
 };
 

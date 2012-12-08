@@ -16,8 +16,12 @@ public:
     QList<PackageFile *> *files() { return &m_files; }
     Package *package() { return m_package; }
     QString repo() { return m_repo; }
+
+    void addDependency(PackageFile *file) { m_dependencies.append(file); }
+    QList<PackageFile *> dependencies() { return m_dependencies; }
 private:
     QList<PackageFile *> m_files;
+    QList<PackageFile *> m_dependencies;
     Package *m_package;
     QString m_repo; // TODO: own class for repo with links to packages?
 };

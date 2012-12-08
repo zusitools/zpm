@@ -182,14 +182,14 @@ void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const 
 
             text += "\n\nDependencies:";
 
-            for (int i = 0; i < package->dependencies().count(); i++) {
-                text += "\n" + package->dependencies().at(i)->name();
+            for (int i = 0; i < package->installedVersion()->dependencies().count(); i++) {
+                text += "\n" + package->installedVersion()->dependencies().at(i)->name();
 
-                for (int j = 0; j < package->dependencies().at(i)->providers()->count(); j++) {
-                    text += "\n     provided by " + package->dependencies().at(i)->providers()->at(j)->package()->getQualifiedName()
-                            + " in repo " + package->dependencies().at(i)->providers()->at(j)->repo();
+                for (int j = 0; j < package->installedVersion()->dependencies().at(i)->providers()->count(); j++) {
+                    text += "\n     provided by " + package->installedVersion()->dependencies().at(i)->providers()->at(j)->package()->getQualifiedName()
+                            + " in repo " + package->installedVersion()->dependencies().at(i)->providers()->at(j)->repo()
+                            + (package->installedVersion()->dependencies().at(i)->providers()->at(j)->package()->state() == AUTOINSTALL ? " (X)" : "");
                 }
-
             }
 
             ui->infoTextEdit->setPlainText(text);
