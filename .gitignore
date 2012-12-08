@@ -18,3 +18,12 @@ moc_*.cpp
 qrc_*.cpp
 Makefile
 *-build-*
+
+# VS
+*.user
+*.suo
+*.sdf
+GeneratedFiles
+Win32
+debug
+release
