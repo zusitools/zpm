@@ -49,18 +49,15 @@ SatSolver::SatSolver(Cnf &cnf): CnfManager(cnf){
 
 	// assert pure literals
 	for(int i = 1; i <= (int) vc; i++) if(vars[i].value == _FREE){
-		if(vars[i].activity[_POSI] == 0 && vars[i].activity[_NEGA] > 0)
-			// ante is NULL, as opposed to empty clause for implied literals
-			assertLiteral(-i, NULL);	
-		else if(vars[i].activity[_NEGA] == 0 && vars[i].activity[_POSI] > 0)
-			assertLiteral(i, NULL);
+		// do not set variable to true unless necessary
+		assertLiteral(-i, NULL);
 	}
 
 	// initialize varOrder
 	nVars = 0; for(unsigned i = 1; i <= vc; i++) 
 		if(vars[i].value == _FREE && SCORE(i) > 0){
 			varOrder[nVars++] = i;
-			vars[i].phase = (vars[i].activity[_POSI] > vars[i].activity[_NEGA])?_POSI:_NEGA;
+			vars[i].phase = _NEGA; // do not set variable to true unless necessary
 		}
 	sort(varOrder, varOrder + nVars, compScores(vars));
 	for(unsigned i = 0; i < nVars; i++) varPosition[varOrder[i]] = i; 
