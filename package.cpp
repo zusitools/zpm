@@ -19,6 +19,7 @@ Package::Package(QString qualifiedName, QString displayName, PackageState state)
 Package::~Package()
 {
     qDeleteAll(*m_versions);
+    delete m_versions;
 }
 
 QString Package::getQualifiedName()

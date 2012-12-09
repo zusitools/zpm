@@ -32,7 +32,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete ((PackageTreeSortFilterProxyModel*) ui->treeView->model())->sourceModel();
+    delete ui->treeView->itemDelegate();
     delete ui;
+    delete cnf;
 }
 
 int MainWindow::variableNumber(PackageVersion *version) {
@@ -121,6 +124,8 @@ void MainWindow::loadRepoData()
                         dependencyList << file;
                         dependency_count++;
                     }
+
+                    fileName.clear();
                 }
 
                 PackageVersion *version = new PackageVersion(fileList, package, fileName);
@@ -140,7 +145,10 @@ void MainWindow::loadRepoData()
         }
 
         xmlFile->close();
+        delete xmlFile;
     }
+
+    xmlFiles.clear();
 
     QList<Package *> packageValues = packages.values();
     PackageTreeModel *treeModel = new PackageTreeModel(&packageValues);
@@ -332,6 +340,8 @@ void MainWindow::solve() {
                 }
             }
         }
+
+        free(values);
 
         solver.printStats();
     }
