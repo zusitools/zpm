@@ -162,7 +162,7 @@ void SatSolver::printSolution(FILE *ofp){
 void SatSolver::getSolution(int &vc, int *&solution)
 {
     vc = this->vc;
-    solution = (int*) calloc(vc, sizeof(int));
+    solution = (int*) calloc(vc + 1, sizeof(int));
     for(unsigned i = 1; i <= this->vc; i++) {
         if(vars[i].value == _POSI) {
             solution[i] = i;
