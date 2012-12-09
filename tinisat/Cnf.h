@@ -34,6 +34,6 @@ struct Cnf{
     Cnf(unsigned vc, unsigned cc, int **clauses, unsigned lc, unsigned *cl);
     ~Cnf();
 
-    void addClauseWithExistingVars(int *clause, unsigned length);
+    int addClauseWithExistingVars(int *clause, unsigned length);
 };
 #endif

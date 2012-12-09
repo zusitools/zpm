@@ -43,11 +43,14 @@ Cnf::~Cnf(){
     free(cl);
 }
 
-void Cnf::addClauseWithExistingVars(int *clause, unsigned length)
+int Cnf::addClauseWithExistingVars(int *clause, unsigned length)
 {
     this->cc++;
     this->lc += length;
     this->cl = (unsigned*) realloc(cl, cc * sizeof(unsigned));
+    this->cl[cc - 1] = length;
     this->clauses = clauses = (int **) realloc(clauses, cc * sizeof(int *));
     this->clauses[cc - 1] = clause;
+
+    return cc - 1;
 }
