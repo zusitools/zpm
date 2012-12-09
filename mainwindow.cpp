@@ -37,7 +37,7 @@ MainWindow::~MainWindow()
 
 int MainWindow::variableNumber(PackageVersion *version) {
     if (!variables.contains(version)) {
-        int index = variables.count() + 1; // indices must start at 1!
+        int index = variables.count() + 2; // indices must start at 1, literal 1 is reserved for disabling clauses!
         variables.insert(version, index);
         return index;
     } else {
@@ -162,7 +162,10 @@ void MainWindow::loadRepoData()
     qDebug() << "Loading model took " + QString::number(myTimer.elapsed()) + " ms";
     myTimer.restart();
 
-    unsigned clause_count = dependency_count + provider_count + installed_count; // we overestimate the number of conflicts clauses but that's OK
+    // we overestimate the number of conflicts clauses but that's OK
+    // +1 because of the dummy clause containing literal 1
+    unsigned clause_count = dependency_count + provider_count + installed_count + 1;
+
     unsigned literal_count = 0;
     unsigned clause_index = 0;
     unsigned *clause_lengths = (unsigned*) calloc(clause_count, sizeof(unsigned));
@@ -174,13 +177,13 @@ void MainWindow::loadRepoData()
         exit(1);
     }
 
-    // DEBUG
-    /*clause_lengths[clause_index] = 1;
+    // There has to be at least one clause containing literal 1, else the SAT solver will crash.
+    // Insert a clause which contains only the literal 1
+    clause_lengths[clause_index] = 1;
     clauses[clause_index] = (int*) calloc(2, sizeof(int));
+    clauses[clause_index][0] = 1;
     literal_count++;
-    clauses[clause_index][0] = 5;
-    clause_index++;*/
-    // END DEBUG
+    clause_index++;
 
     // dependency clauses
     foreach (Package *package, packages) {
@@ -198,8 +201,10 @@ void MainWindow::loadRepoData()
                 literal_count++;
             }
 
-            qDebug() << "dependency" << dependency->name();
-            DEBUGCLAUSE()
+            dependencyRules.insert(QPair<PackageVersion*, PackageFile*>(package->installedVersion(), dependency), clause_index);
+
+            //qDebug() << "dependency" << dependency->name();
+            //DEBUGCLAUSE()
 
             clause_index++;
         }
@@ -232,8 +237,10 @@ void MainWindow::loadRepoData()
                 clauses[clause_index][0] = -index_i;
                 clauses[clause_index][1] = -variableNumber(file->providers()->at(j));
 
-                qDebug() << "conflict" << file->name();
-                DEBUGCLAUSE()
+                conflictRules.insert(QPair<PackageVersion*, PackageVersion*>(file->providers()->at(i), file->providers()->at(j)), clause_index);
+
+                //qDebug() << "conflict" << file->name();
+                //DEBUGCLAUSE()
 
                 clause_index++;
             }
@@ -265,8 +272,10 @@ void MainWindow::loadRepoData()
             clauses[clause_index][i] = variableNumber(package->versions()->at(i));
         }
 
-        qDebug() << "policy" << package->getQualifiedName();
-        DEBUGCLAUSE()
+        policyRules.insert(package, clause_index);
+
+        //qDebug() << "policy" << package->getQualifiedName();
+        //DEBUGCLAUSE()
 
         clause_index++;
     }
@@ -277,7 +286,7 @@ void MainWindow::loadRepoData()
     qDebug() << "clause count" << clause_index;
     qDebug() << "literal count" << literal_count;
 
-    cnf = new Cnf(variables.count(), clause_index, clauses, literal_count, clause_lengths);
+    cnf = new Cnf(variables.count() + 1, clause_index, clauses, literal_count, clause_lengths);
     qDebug() << "Creating dependencies took " + QString::number(myTimer.elapsed()) + " ms";
 
     myTimer.restart();
@@ -296,7 +305,7 @@ void MainWindow::solve() {
 
         solver.getSolution(vc, values);
 
-        for (int i = 0; i < vc; i++) {
+        for (int i = 2; i < vc; i++) {
             if (i < 10) qDebug() << values[i];
 
             if (values[i] < 0) {
@@ -447,4 +456,42 @@ void MainWindow::test_slot(QAction *action)
     cnf->addClauseWithExistingVars(lit, 2);
 
     solve();
+}
+
+
+/**
+ * @brief MainWindow::disableRule<T> Disables a rule by inserting a "dummy clause" instead of the clause belonging to that rule.
+ * @param ruleMap The map containing the clause indices
+ * @param key The key in the rule map
+ */
+template <class T>
+void MainWindow::disableRule(QMap<T, int> ruleMap, T key)
+{
+    int clauseIndex = ruleMap[key];
+    int clauseLength = cnf->cl[clauseIndex];
+
+    // Save the pointer to the original clause
+    disabledClauses[clauseIndex] = cnf->clauses[clauseIndex];
+
+    // Retrieve a dummy clause with the same length as the original clause
+    if (!disabledClausesByLiteralCount.contains(clauseLength)) {
+        int* disabledClause = new int[clauseLength + 1];
+
+        for (int i = 0; i < clauseLength; i++) {
+            disabledClause[i] = 1;
+        }
+        disabledClause[clauseLength] = 0;
+
+        disabledClausesByLiteralCount.insert(clauseLength, disabledClause);
+    }
+
+    // Insert dummy clause instead of the original clause.
+    cnf->clauses[clauseIndex] = disabledClausesByLiteralCount[clauseLength];
+
+}
+
+template <class T>
+void MainWindow::enableRule(QMap<T, int> ruleMap, T key)
+{
+    // TODO
 }

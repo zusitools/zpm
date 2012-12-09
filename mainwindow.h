@@ -5,6 +5,8 @@
 #include <QStandardItem>
 #include <QItemSelection>
 #include <QtXml/QDomElement>
+#include <QMap>
+#include <QPair>
 #include "package.h"
 #include "tinisat/Cnf.h"
 
@@ -38,13 +40,25 @@ private:
     void nodeToItem(const QDomNode &node, QStandardItem *parent);
 
     // Solver information
+    QMap<QPair<PackageVersion*, PackageFile*>, int> dependencyRules;
+    QMap<QPair<PackageVersion*, PackageVersion*>, int> conflictRules;
+    QMap<Package*, int> policyRules;
+    QMap<PackageVersion*, int> jobRules;
+
+    QMap<int, int*> disabledClausesByLiteralCount;
+    QMap<int, int*> disabledClauses;
 
     // This assigns a variable number to each package version.
     QMap<PackageVersion *, int> variables;
     Cnf *cnf;
 
+
+
     int variableNumber(PackageVersion *version);
     void solve();
+
+    template <class T> void disableRule(QMap<T, int> ruleMap, T key);
+    template <class T> void enableRule(QMap<T, int> ruleMap, T key);
 };
 
 #endif // MAINWINDOW_H
