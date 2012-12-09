@@ -31,28 +31,36 @@ enum PackageState {
 class Package
 {
 public:
-    Package(QString qualifiedName, QString displayName = QString(), PackageState state = NOTINSTALLED);
+    Package(QString qualifiedName, QString displayName = QString());
     ~Package();
 
     QString getQualifiedName();
     QString getDisplayName();
-    PackageState state() { return m_state; }
-    PackageState originalState() { return m_originalState; }
-    void setState(PackageState state) { m_state = state; }
+
+    /**
+     * Returns the current state of the package.
+     */
+    PackageState state();
+
+    /**
+     * Returns the state of the package when it was read in from the repository file.
+     */
+    PackageState originalState();
 
     QList<PackageVersion *> *versions() { return m_versions; }
     void appendVersion(PackageVersion *version) { m_versions->append(version); }
-    void setInstalledVersion(PackageVersion *version) { m_installedVersion = version; }
 
-    PackageVersion *installedVersion() { return m_installedVersion; }
+    PackageVersion *installedVersion();
+    PackageVersion *versionToInstall();
 
 private:
     QString qualifiedName;
     QString displayName;
-    PackageState m_state;
-    const PackageState m_originalState;
+
     QList<PackageVersion *> *m_versions;
-    PackageVersion *m_installedVersion;
+
+    bool m_autoChange;
+    bool m_protected;
 };
 
 #endif // PACKAGE_H

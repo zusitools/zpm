@@ -92,8 +92,7 @@ void MainWindow::loadRepoData()
                 QString packageName = packageNodes.at(i).attributes().namedItem("name").nodeValue();
 
                 if (!packages.contains(packageName)) {
-                    package = new Package(packageName, packageNodes.at(i).attributes().namedItem("displayname").nodeValue(),
-                                          /*qrand() % 2 == 0 ?*/ NOTINSTALLED /*: KEEPINSTALLED*/);
+                    package = new Package(packageName, packageNodes.at(i).attributes().namedItem("displayname").nodeValue());
                     packages.insert(packageName, package);
 
                     if (package->state() == KEEPINSTALLED) {
@@ -128,14 +127,13 @@ void MainWindow::loadRepoData()
                     fileName.clear();
                 }
 
-                PackageVersion *version = new PackageVersion(fileList, package, fileName);
+                PackageVersion *version = new PackageVersion(fileList, package, fileName, false);
 
                 foreach (PackageFile *dependency, dependencyList) {
                     version->addDependency(dependency);
                 }
 
                 package->appendVersion(version);
-                package->setInstalledVersion(version);
 
                 for (int j = 0; j < fileList.count(); j++) {
                     fileList.at(j)->addProvider(version);
@@ -195,26 +193,27 @@ void MainWindow::loadRepoData()
 
     // dependency clauses
     foreach (Package *package, packages) {
-        // TODO iterate over *all* versions, not just the currently installed one
-        foreach (PackageFile *dependency, package->installedVersion()->dependencies()) {
+        foreach (PackageVersion *version, *(package->versions())) {
+            foreach (PackageFile *dependency, version->dependencies()) {
 
-            clause_lengths[clause_index] = dependency->providers()->count() + 1;
-            clauses[clause_index] = (int*)calloc(clause_lengths[clause_index] + 1, sizeof(int));
+                clause_lengths[clause_index] = dependency->providers()->count() + 1;
+                clauses[clause_index] = (int*)calloc(clause_lengths[clause_index] + 1, sizeof(int));
 
-            clauses[clause_index][0] = -variableNumber(package->installedVersion());
-            literal_count++;
-
-            for (int i = 0; i < dependency->providers()->count(); i++) {
-                clauses[clause_index][i + 1] = variableNumber(dependency->providers()->at(i));
+                clauses[clause_index][0] = -variableNumber(version);
                 literal_count++;
+
+                for (int i = 0; i < dependency->providers()->count(); i++) {
+                    clauses[clause_index][i + 1] = variableNumber(dependency->providers()->at(i));
+                    literal_count++;
+                }
+
+                dependencyRules.insert(QPair<PackageVersion*, PackageFile*>(version, dependency), clause_index);
+
+                //qDebug() << "dependency" << dependency->name();
+                //DEBUGCLAUSE()
+
+                clause_index++;
             }
-
-            dependencyRules.insert(QPair<PackageVersion*, PackageFile*>(package->installedVersion(), dependency), clause_index);
-
-            //qDebug() << "dependency" << dependency->name();
-            //DEBUGCLAUSE()
-
-            clause_index++;
         }
     }
 
@@ -307,7 +306,6 @@ void MainWindow::solve() {
     SatSolver solver(*cnf);
 
     if (solver.run()) {
-        // solver.printSolution(stdout);
         int vc;
         int* values;
 
@@ -316,28 +314,13 @@ void MainWindow::solve() {
         for (int i = 2; i < vc; i++) {
             if (i < 10) qDebug() << values[i];
 
+            PackageVersion *version = variables.key(i);
+
+            // TODO: update tree view, differentiate between manual and automatic changes
             if (values[i] < 0) {
-                switch (variables.key(i)->package()->state()) {
-                    case KEEPINSTALLED:
-                        qDebug() << "auto deleting package" << variables.key(i)->package()->getQualifiedName();
-                        variables.key(i)->package()->setState(AUTODELETE);
-                        break;
-                    case INSTALL:
-                        qDebug() << "not installing package" << variables.key(i)->package()->getQualifiedName();
-                        variables.key(i)->package()->setState(NOTINSTALLED);
-                        break;
-                    default:
-                        break;
-                }
-            } else if (values[i] > 0) {
-                switch (variables.key(i)->package()->state()) {
-                    case NOTINSTALLED:
-                        qDebug() << "installing package" << variables.key(i)->package()->getQualifiedName();
-                        variables.key(i)->package()->setState(AUTOINSTALL);
-                        break;
-                    default:
-                        break;
-                }
+                version->setKeepInstalled(false);
+            } else {
+                version->setKeepInstalled(true);
             }
         }
 
@@ -362,10 +345,20 @@ void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
         switch (package->originalState()) {
             case NOTINSTALLED: {
                 QAction *installAction = new QAction(QIcon(":/zpm/icons/install.xpm"), tr("Install"), this);
+                installAction->setProperty("action", "install");
                 installAction->setData(qVariantFromValue((void*)package));
                 menu->addAction(installAction);
-                menu->addAction(QIcon(":/zpm/icons/taboo.xpm"), tr("Taboo -- Never install"), this, SLOT(test_slot(QAction *)));
-                menu->addAction(QIcon(":/zpm/icons/noinst.xpm"), tr("Do Not install"), this, SLOT(test_slot(QAction *)));
+
+                QAction *tabooAction = new QAction(QIcon(":/zpm/icons/taboo.xpm"), tr("Taboo -- Never install"), this);
+                tabooAction->setProperty("action", "taboo");
+                tabooAction->setData(qVariantFromValue((void*)package));
+                menu->addAction(tabooAction);
+
+                QAction *noinstAction = new QAction(QIcon(":/zpm/icons/noinst.xpm"), tr("Do Not install"), this);
+                noinstAction->setProperty("action", "noinst");
+                noinstAction->setData(qVariantFromValue((void*)package));
+                menu->addAction(noinstAction);
+
                 break;
             }
 
@@ -382,12 +375,15 @@ void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
         connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(test_slot(QAction*)));
 
         menu->exec(QCursor::pos());
+
+        qDeleteAll(menu->actions());
+        delete menu;
     }
 }
 
 void MainWindow::packageCheckStateChanged(QModelIndex index)
 {
-    Package *package = ((PackageItem*)index.internalPointer())->package();
+    /* Package *package = ((PackageItem*)index.internalPointer())->package();
 
     switch (package->state()) {
         case KEEPINSTALLED:
@@ -407,7 +403,7 @@ void MainWindow::packageCheckStateChanged(QModelIndex index)
             break;
         default:
             break;
-    }
+    }*/
 }
 
 void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -422,21 +418,22 @@ void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const 
         PackageTreeItem *item = (PackageTreeItem*)(proxyModel->mapToSource(index).internalPointer());
         if (item->getType() == PACKAGE) {
             Package *package = ((PackageItem*)item)->package();
+            PackageVersion *version = package->versions()->first(); // TODO
             QString text = package->getQualifiedName() + "\n\nFiles:";
 
-            for (int i = 0; i < package->installedVersion()->files()->count(); i++) {
-                text += "\n" + package->installedVersion()->files()->at(i)->name();
+            for (int i = 0; i < version->files()->count(); i++) {
+                text += "\n" + version->files()->at(i)->name();
             }
 
             text += "\n\nDependencies:";
 
-            for (int i = 0; i < package->installedVersion()->dependencies().count(); i++) {
-                text += "\n" + package->installedVersion()->dependencies().at(i)->name();
+            for (int i = 0; i < version->dependencies().count(); i++) {
+                text += "\n" + version->dependencies().at(i)->name();
 
-                for (int j = 0; j < package->installedVersion()->dependencies().at(i)->providers()->count(); j++) {
-                    text += "\n     provided by " + package->installedVersion()->dependencies().at(i)->providers()->at(j)->package()->getQualifiedName()
-                            + " in repo " + package->installedVersion()->dependencies().at(i)->providers()->at(j)->repo()
-                            + (package->installedVersion()->dependencies().at(i)->providers()->at(j)->package()->state() == AUTOINSTALL ? " (X)" : "");
+                for (int j = 0; j < version->dependencies().at(i)->providers()->count(); j++) {
+                    text += "\n     provided by " + version->dependencies().at(i)->providers()->at(j)->package()->getQualifiedName()
+                            + " in repo " + version->dependencies().at(i)->providers()->at(j)->repo()
+                            + (version->dependencies().at(i)->providers()->at(j)->package()->state() == AUTOINSTALL ? " (X)" : "");
                 }
             }
 
@@ -457,15 +454,26 @@ void MainWindow::on_lineEdit_textChanged(const QString &newValue)
 void MainWindow::test_slot(QAction *action)
 {
     Package *package = (Package*)action->data().value<void*>();
-    int* lit = (int*) calloc(2, sizeof(int));
-    lit[0] = variableNumber(package->installedVersion());
-    lit[1] = 0;
 
-    qDebug() << "setting variable" << lit[0];
+    if (action->property("action") == "install") {
 
-    cnf->addClauseWithExistingVars(lit, 2);
+        if (jobRules.contains(package->versions()->first())) {
+            enableRule(jobRules, package->versions()->first());
+        } else {
+            int* lit = (int*) calloc(2, sizeof(int));
+            lit[0] = variableNumber(package->versions()->first());
+            lit[1] = 0;
 
-    solve();
+            jobRules.insert(package->versions()->first(), cnf->addClauseWithExistingVars(lit, 1));
+        }
+
+        solve();
+    } else if (action->property("action") == "noinst") {
+        if (jobRules.contains(package->versions()->first())) {
+            disableRule(jobRules, package->versions()->first());
+            solve();
+        }
+    }
 }
 
 
