@@ -21,6 +21,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QList<int> sizes;
+    sizes << 150;
+    sizes << 850;
+    ui->horizontalSplitter->setSizes(sizes);
+
+    sizes.clear();
+    sizes << 750;
+    sizes << 250;
+    ui->verticalSplitter->setSizes(sizes);
+
     ui->treeView->setItemDelegate(new PackageItemDelegate());
 
     this->loadRepoData();
