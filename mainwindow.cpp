@@ -155,13 +155,13 @@ void MainWindow::loadRepoData()
     xmlFiles.clear();
 
     QList<Package *> packageValues = packages.values();
-    PackageTreeModel *treeModel = new PackageTreeModel(&packageValues);
-    PackageTreeSortFilterProxyModel *sortFilterModel = new PackageTreeSortFilterProxyModel();
-    sortFilterModel->setSourceModel(treeModel);
+    packageTreeModel = new PackageTreeModel(&packageValues);
+    sortFilterProxyModel = new PackageTreeSortFilterProxyModel();
+    sortFilterProxyModel->setSourceModel(packageTreeModel);
 
-    ui->treeView->setModel(sortFilterModel);
+    ui->treeView->setModel(sortFilterProxyModel);
     connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(treeViewSelectionChanged(QItemSelection,QItemSelection)));
-    connect(treeModel, SIGNAL(packageCheckStateChanged(QModelIndex)), this, SLOT(packageCheckStateChanged(QModelIndex)));
+    connect(packageTreeModel, SIGNAL(packageCheckStateChanged(QModelIndex)), this, SLOT(packageCheckStateChanged(QModelIndex)));
 
     ui->treeView->sortByColumn(0, Qt::AscendingOrder);
     ui->treeView->expandAll();
@@ -336,13 +336,66 @@ void MainWindow::solve() {
     }
 }
 
+void MainWindow::insertJobRule(PackageVersion *version, char sign) {
+    if (jobRules.contains(version)) {
+        if (disabledClauses.contains(jobRules[version])) {
+            enableRule(jobRules, version);
+        }
+
+        cnf->clauses[jobRules[version]][0] = sign * variableNumber(version);
+    } else {
+        int* lit = (int*) calloc(2, sizeof(int));
+        lit[0] = sign * variableNumber(version);
+        lit[1] = 0;
+
+        jobRules.insert(version, cnf->addClauseWithExistingVars(lit, 1));
+    }
+}
+
+void MainWindow::installPackage(Package *package)
+{
+    installPackageVersion(package->versions()->first());
+}
+
+void MainWindow::installPackageVersion(PackageVersion *packageVersion)
+{
+    // TODO: do not install other versions of this package?
+    packageVersion->package()->setAutoChange(false);
+    insertJobRule(packageVersion, +1);
+    solve();
+}
+
+void MainWindow::keepPackage(Package *package)
+{
+    foreach (PackageVersion *version, *(package->versions())) {
+        if (jobRules.contains(version) && !disabledClauses.contains(jobRules[version])) {
+            disableRule(jobRules, version);
+        }
+    }
+
+    solve();
+}
+
+void MainWindow::deletePackage(Package *package)
+{
+    // TODO undo any other operation on this package
+    if (package->installedVersion() != NULL) {
+        insertJobRule(package->installedVersion(), -1);
+        solve();
+    }
+}
+
+void MainWindow::protectPackage(Package *package)
+{
+
+}
+
 void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
 {
     // Retrieve model index of item at the position the context menu was opened
     QModelIndex itemIndex = ui->treeView->indexAt(pos);
 
-    PackageTreeSortFilterProxyModel *proxyModel = (PackageTreeSortFilterProxyModel*)ui->treeView->model();
-    PackageTreeItem *item = (PackageTreeItem*) (proxyModel->mapToSource(itemIndex).internalPointer());
+    PackageTreeItem *item = (PackageTreeItem*)(sortFilterProxyModel->mapToSource(itemIndex).internalPointer());
 
     if (item->getType() == PACKAGE) {
         Package *package = ((PackageItem*)item)->package();
@@ -420,8 +473,7 @@ void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const 
 
     if (selected.count() == 1) {
         QModelIndex index = selected.at(0).indexes().at(0);
-        PackageTreeSortFilterProxyModel *proxyModel = (PackageTreeSortFilterProxyModel*) index.model();
-        PackageTreeItem *item = (PackageTreeItem*)(proxyModel->mapToSource(index).internalPointer());
+        PackageTreeItem *item = (PackageTreeItem*) sortFilterProxyModel->mapToSource(index).internalPointer();
         if (item->getType() == PACKAGE) {
             Package *package = ((PackageItem*)item)->package();
             PackageVersion *version = package->versions()->first(); // TODO
@@ -450,7 +502,7 @@ void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const 
 
 void MainWindow::on_lineEdit_textChanged(const QString &newValue)
 {
-    ((PackageTreeSortFilterProxyModel* )(ui->treeView->model()))->setFilterRegExp(QRegExp(newValue, Qt::CaseInsensitive));
+    sortFilterProxyModel->setFilterRegExp(QRegExp(newValue, Qt::CaseInsensitive));
 
     if (!newValue.isEmpty()) {
         ui->treeView->expandAll();

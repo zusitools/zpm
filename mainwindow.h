@@ -8,6 +8,8 @@
 #include <QMap>
 #include <QPair>
 #include "package.h"
+#include "packagetreemodel.h"
+#include "packagetreesortfilterproxymodel.h"
 #include "tinisat/Cnf.h"
 
 namespace Ui {
@@ -37,6 +39,10 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QMap<QString, Package *> packages;
+
+    PackageTreeModel *packageTreeModel;
+    PackageTreeSortFilterProxyModel *sortFilterProxyModel;
+
     void nodeToItem(const QDomNode &node, QStandardItem *parent);
 
     // Solver information
