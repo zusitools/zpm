@@ -497,7 +497,8 @@ void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const 
                 for (int j = 0; j < version->dependencies().at(i)->providers()->count(); j++) {
                     text += "\n     provided by " + version->dependencies().at(i)->providers()->at(j)->package()->getQualifiedName()
                             + " in repo " + version->dependencies().at(i)->providers()->at(j)->repo()
-                            + (version->dependencies().at(i)->providers()->at(j)->package()->state() == AUTOINSTALL ? " (X)" : "");
+                            + (version->dependencies().at(i)->providers()->at(j)->installed() ? " (X)" : "")
+                            + (version->dependencies().at(i)->providers()->at(j)->keepInstalled() ? " (!)" : "");
                 }
             }
 
