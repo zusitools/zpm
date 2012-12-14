@@ -112,7 +112,7 @@ int SatSolver::selectLiteral(){
 bool SatSolver::run(){
 	if(dLevel == 0) return false; 		// assertUnitClauses has failed
 	for(int lit; (lit = selectLiteral());){ // pick decision literal
-		if(!decide(lit)) do{ 		// decision/conflict
+		if(!decide(NEG(VAR(lit)))) do{ 		// decision/conflict, always assert literal as false first to prevent unwanted package installations
 			// conflict has occurred in dLevel 1, unsat
 
 			if(aLevel == 0) return false;
