@@ -14,7 +14,7 @@ Package::Package(QString qualifiedName, QString displayName)
 
     this->m_versions = new QList<PackageVersion *>();
     this->m_protected = false; // TODO
-    this->m_autoChange = false; // TODO
+    this->m_autoChange = true;
 }
 
 Package::~Package()

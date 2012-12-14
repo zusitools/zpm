@@ -65,6 +65,13 @@ private:
 
     template <class T> void disableRule(QMap<T, int> ruleMap, T key);
     template <class T> void enableRule(QMap<T, int> ruleMap, T key);
+    void insertJobRule(PackageVersion *version, char sign);
+
+    void installPackage(Package *package);
+    void installPackageVersion(PackageVersion *packageVersion);
+    void keepPackage(Package *package);
+    void deletePackage(Package *package);
+    void protectPackage(Package *package);
 };
 
 #endif // MAINWINDOW_H

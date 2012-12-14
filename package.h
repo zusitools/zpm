@@ -53,6 +53,8 @@ public:
     PackageVersion *installedVersion();
     PackageVersion *versionToInstall();
 
+    void setAutoChange(bool autoChange) { m_autoChange = autoChange; }
+
 private:
     QString qualifiedName;
     QString displayName;

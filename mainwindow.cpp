@@ -442,27 +442,33 @@ void MainWindow::on_treeView_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::packageCheckStateChanged(QModelIndex index)
 {
-    /* Package *package = ((PackageItem*)index.internalPointer())->package();
+    Package *package = ((PackageItem*)index.internalPointer())->package();
 
+    // Select an action based on the current state of the package.
     switch (package->state()) {
         case KEEPINSTALLED:
-            package->setState(UPDATE);
+        case AUTOINSTALL:
+            // update to latest version
+            installPackageVersion(package->versions()->first()); // TODO
             break;
         case UPDATE:
-            package->setState(DELETE);
+            deletePackage(package);
             break;
         case DELETE:
-            package->setState(package->originalState());
+            // keep installed version
+            installPackageVersion(package->installedVersion());
             break;
         case NOTINSTALLED:
-            package->setState(INSTALL);
+            // TODO which version to install?
+            installPackageVersion(package->versions()->first());
             break;
         case INSTALL:
-            package->setState(package->originalState());
+            // do not install package
+            keepPackage(package);
             break;
         default:
             break;
-    }*/
+    }
 }
 
 void MainWindow::treeViewSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
@@ -512,20 +518,10 @@ void MainWindow::on_lineEdit_textChanged(const QString &newValue)
 void MainWindow::test_slot(QAction *action)
 {
     Package *package = (Package*)action->data().value<void*>();
+    package->setAutoChange(false);
 
     if (action->property("action") == "install") {
-
-        if (jobRules.contains(package->versions()->first())) {
-            enableRule(jobRules, package->versions()->first());
-        } else {
-            int* lit = (int*) calloc(2, sizeof(int));
-            lit[0] = variableNumber(package->versions()->first());
-            lit[1] = 0;
-
-            jobRules.insert(package->versions()->first(), cnf->addClauseWithExistingVars(lit, 1));
-        }
-
-        solve();
+        installPackage(package);
     } else if (action->property("action") == "noinst") {
         if (jobRules.contains(package->versions()->first())) {
             disableRule(jobRules, package->versions()->first());
@@ -569,5 +565,8 @@ void MainWindow::disableRule(QMap<T, int> ruleMap, T key)
 template <class T>
 void MainWindow::enableRule(QMap<T, int> ruleMap, T key)
 {
-    // TODO
+    if (disabledClauses.contains(ruleMap[key])) {
+        cnf->clauses[ruleMap[key]] = disabledClauses[ruleMap[key]];
+        disabledClauses.remove(ruleMap[key]);
+    }
 }
