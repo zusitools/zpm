@@ -34,10 +34,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeView->setItemDelegate(new PackageItemDelegate());
 
     this->loadRepoData();
-
-    ui->treeView->header()->setResizeMode(0, QHeaderView::Stretch);
-    ui->treeView->header()->setResizeMode(1, QHeaderView::Custom);
-    ui->treeView->header()->setResizeMode(2, QHeaderView::Custom);
 }
 
 MainWindow::~MainWindow()
